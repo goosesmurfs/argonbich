@@ -3,6 +3,7 @@ import Link from "next/link";
 import JsonLd from "@/components/JsonLd";
 import FaqList from "@/components/FaqList";
 import CtaBand from "@/components/CtaBand";
+import RoofAnatomy from "@/components/RoofAnatomy";
 import { site, trustPoints, stats } from "@/lib/site";
 import { services } from "@/lib/services";
 import { cities } from "@/lib/cities";
@@ -76,6 +77,8 @@ export default function HomePage() {
 
   return (
     <>
+      {/* hoisted to <head> by React so the LCP background loads early */}
+      <link rel="preload" href="/images/hero-bg.svg" as="image" />
       <JsonLd data={faqSchema(homeFaqs)} />
 
       {/* Hero */}
@@ -155,8 +158,29 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Why us */}
+      {/* Anatomy of a roof */}
       <section className="section section-dark">
+        <div className="container">
+          <div className="section-head">
+            <span className="eyebrow">Built in Layers</span>
+            <h2>Anatomy of a Ridgeline Roof</h2>
+            <p className="lede">
+              Shingles are just the layer you can see. Hover the legend to
+              explore the system underneath, the parts that decide whether a
+              roof lasts 12 years or 25.
+            </p>
+          </div>
+          <RoofAnatomy />
+          <div className="btn-row" style={{ marginTop: "2.4rem" }}>
+            <Link href="/roof-replacement-process/" className="btn btn-ghost">
+              How We Build Each Layer
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Why us */}
+      <section className="section section-dark" style={{ paddingTop: 0 }}>
         <div className="container two-col">
           <div>
             <span className="eyebrow">Why Ridgeline</span>

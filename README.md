@@ -38,12 +38,27 @@ CSS-only so content renders without JavaScript.
 
 ## Notes
 
-- SEO: per-page metadata, RoofingContractor/FAQPage/HowTo/Article/
-  BreadcrumbList JSON-LD, generated `sitemap.xml`, `robots.txt`,
-  `opengraph-image` (built at export time), and `public/llms.txt`.
-- The lead form posts via `mailto:` so it works on a purely static host;
-  point the form `action` in `src/components/LeadForm.tsx` at a form
-  backend when one is available.
+- SEO: per-page metadata, RoofingContractor/Service/OfferCatalog/FAQPage/
+  HowTo/Article/BreadcrumbList JSON-LD, generated `sitemap.xml` (with
+  `lastModified`), `robots.txt`, web manifest, `opengraph-image` (built at
+  export time), and `public/llms.txt`. Fonts are self-hosted via
+  `next/font`; the hero image is preloaded.
+- Motion (scroll progress bar, scroll-driven reveals) is pure CSS behind
+  `@supports` and `prefers-reduced-motion`, so content renders fully
+  without JavaScript everywhere.
+- Lead form: set `NEXT_PUBLIC_FORM_ENDPOINT` at build time to POST to a
+  form backend (Formspree, Basin, etc.) and point its redirect at
+  `/thank-you/`; without it the form falls back to a `mailto:` handoff.
+- Analytics: set `NEXT_PUBLIC_GA_ID` (GA4 measurement ID) at build time to
+  enable Google Analytics; omitted, no analytics code ships.
+- `vercel.json` 301-redirects the legacy `/attic-insulation-process/` URL.
 - The phone number (317) 555-0148 is a placeholder; update it in
   `src/lib/site.ts` (one place) before launch, along with the production
   domain in `site.url`.
+
+## Before launch (needs the real business)
+
+- Real photography (drone shots, crew, finished work) to replace the
+  illustrated hero, plus a projects/gallery page.
+- Street address and geo in `src/lib/schema.ts`, a Google Business
+  Profile linked via `sameAs`, and real reviews embedded once they exist.

@@ -7,6 +7,9 @@ import { cities } from "@/lib/cities";
 export default function Footer() {
   return (
     <footer className="site-footer">
+      <div className="footer-wordmark" aria-hidden="true">
+        Ridgeline
+      </div>
       <div className="container footer-grid">
         <div className="footer-about">
           <div className="brand" style={{ marginBottom: "1rem" }}>
@@ -44,6 +47,11 @@ export default function Footer() {
             <li>
               <Link href="/roof-replacement-process/">
                 Roof Replacement Process
+              </Link>
+            </li>
+            <li>
+              <Link href="/roof-replacement-cost/">
+                Roof Replacement Cost Guide
               </Link>
             </li>
           </ul>

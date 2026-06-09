@@ -15,10 +15,10 @@
   --line-dark: rgba(239, 236, 228, 0.16);
   --line-dark-strong: rgba(239, 236, 228, 0.85);
   --radius: 6px;
-  --font-display: "Space Grotesk", "Arial Black", sans-serif;
-  --font-body: "Inter", "Helvetica Neue", Arial, sans-serif;
-  --font-mono: "Space Mono", "Courier New", monospace;
+  /* font variables (--font-display, --font-body, --font-mono) are injected
+     on <html> by next/font in layout.tsx */
   --pitch: 4vw;
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
 }
 
 * {
@@ -377,7 +377,10 @@ p {
 /* ---------- hero ---------- */
 .hero {
   position: relative;
-  background:
+  background-color: var(--void);
+  background-size: 180px, auto, cover;
+  background-position: top left, center, center bottom;
+  background-image: var(--grain),
     linear-gradient(
       180deg,
       rgba(11, 14, 18, 0.55) 0%,
@@ -385,8 +388,6 @@ p {
       var(--void) 100%
     ),
     url("/images/hero-bg.svg");
-  background-size: cover;
-  background-position: center bottom;
   color: var(--paper);
   padding: clamp(4rem, 9vh, 7rem) 0 0;
 }
@@ -551,7 +552,8 @@ p {
 }
 
 .section-dark {
-  background: var(--carbon);
+  background-color: var(--carbon);
+  background-image: var(--grain);
   color: var(--paper);
 }
 
@@ -1023,16 +1025,54 @@ p {
 
 /* ---------- CTA band ---------- */
 .cta-band {
-  background: var(--void);
+  background-color: var(--void);
+  background-image: var(--grain);
 }
 
 .cta-band h2 {
   font-size: clamp(2.2rem, 6vw, 4.2rem);
   letter-spacing: -0.03em;
+  margin-bottom: 0.4em;
+}
+
+.cta-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 3rem;
+  align-items: end;
+}
+
+@media (max-width: 860px) {
+  .cta-grid {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+}
+
+.cta-side {
+  border-left: 2px solid var(--signal);
+  padding-left: 1.8rem;
+}
+
+@media (max-width: 860px) {
+  .cta-side {
+    border-left: none;
+    padding-left: 0;
+    border-top: 1px solid var(--line-dark);
+    padding-top: 1.6rem;
+  }
+}
+
+.cta-side .form-note {
+  color: var(--mist);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.72rem;
 }
 
 .cta-band .btn-row {
-  margin-top: 1.8rem;
+  margin-top: 1.6rem;
 }
 
 .cta-phone {
@@ -1090,7 +1130,8 @@ p {
 .page-hero {
   position: relative;
   padding: 0 0 4rem;
-  background: var(--void);
+  background-color: var(--void);
+  background-image: var(--grain);
   color: var(--paper);
   border-bottom: 2px solid var(--signal);
 }
@@ -1130,9 +1171,28 @@ p {
 
 /* ---------- footer ---------- */
 .site-footer {
-  background: var(--void);
+  background-color: var(--void);
+  background-image: var(--grain);
   color: var(--paper);
   border-top: 2px solid var(--signal);
+  overflow: hidden;
+}
+
+.footer-wordmark {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: clamp(3.4rem, 13.5vw, 11.5rem);
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  text-align: center;
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(239, 236, 228, 0.14);
+  user-select: none;
+  pointer-events: none;
+  padding-top: 2.4rem;
+  margin-bottom: -0.12em;
+  white-space: nowrap;
 }
 
 .footer-grid {
@@ -1312,4 +1372,218 @@ p {
 
 .skip-link:focus {
   left: 0;
+}
+
+/* ---------- focus states ---------- */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+label:focus-visible {
+  outline: 3px solid var(--signal);
+  outline-offset: 2px;
+}
+
+/* ---------- micro-interactions ---------- */
+.site-nav a {
+  position: relative;
+}
+
+.site-nav a:not(.btn)::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  height: 2px;
+  width: 100%;
+  background: var(--signal-bright);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.2s ease;
+}
+
+.site-nav a:not(.btn):hover::after,
+.site-nav a:not(.btn):focus-visible::after {
+  transform: scaleX(1);
+}
+
+.card-index {
+  transition: color 0.2s ease, letter-spacing 0.2s ease;
+}
+
+.card:hover .card-index {
+  color: var(--signal);
+  letter-spacing: 0.26em;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* ---------- scroll progress bar ---------- */
+.scroll-progress {
+  display: none;
+}
+
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .scroll-progress {
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--signal);
+      transform-origin: left;
+      transform: scaleX(0);
+      z-index: 90;
+      animation: scroll-progress linear both;
+      animation-timeline: scroll(root);
+      pointer-events: none;
+    }
+  }
+}
+
+@keyframes scroll-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* ---------- scroll-driven reveals ----------
+   Pure CSS progressive enhancement: content renders fully without JS and
+   in browsers without scroll-timeline support. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .card,
+    .process-step,
+    .step-row,
+    .section-head {
+      animation: rise-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 80%;
+    }
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- roof anatomy diagram ---------- */
+.anatomy {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+@media (max-width: 980px) {
+  .anatomy {
+    grid-template-columns: 1fr;
+  }
+}
+
+.anatomy-figure {
+  background: var(--carbon-2);
+  background-image: var(--grain);
+  border: 1.5px solid var(--line-dark);
+  border-radius: var(--radius);
+  padding: clamp(1rem, 2.5vw, 2rem);
+}
+
+.anatomy-figure svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.anatomy-legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line-dark);
+}
+
+.anatomy-legend li {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  gap: 1rem;
+  align-items: baseline;
+  padding: 1rem 0.4rem;
+  border-bottom: 1px solid var(--line-dark);
+  cursor: default;
+  transition: background-color 0.15s ease;
+}
+
+.anatomy-legend li:hover {
+  background: rgba(255, 77, 0, 0.06);
+}
+
+.anatomy-num {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  color: var(--signal-bright);
+}
+
+.anatomy-legend h3 {
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.anatomy-legend p {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--mist);
+}
+
+/* diagram layer states */
+.anatomy-svg [data-layer] {
+  transition: opacity 0.25s ease;
+}
+
+.anatomy-svg [data-layer] .glow {
+  transition: stroke 0.25s ease, fill 0.25s ease, opacity 0.25s ease;
+}
+
+/* hovering a layer in the diagram dims the rest */
+.anatomy-svg:hover [data-layer]:not(:hover) {
+  opacity: 0.3;
+}
+
+/* hovering a legend row highlights its layer (via :has, progressive) */
+.anatomy:has(.anatomy-legend li:nth-child(1):hover)
+  .anatomy-svg
+  [data-layer]:not([data-layer="1"]),
+.anatomy:has(.anatomy-legend li:nth-child(2):hover)
+  .anatomy-svg
+  [data-layer]:not([data-layer="2"]),
+.anatomy:has(.anatomy-legend li:nth-child(3):hover)
+  .anatomy-svg
+  [data-layer]:not([data-layer="3"]),
+.anatomy:has(.anatomy-legend li:nth-child(4):hover)
+  .anatomy-svg
+  [data-layer]:not([data-layer="4"]),
+.anatomy:has(.anatomy-legend li:nth-child(5):hover)
+  .anatomy-svg
+  [data-layer]:not([data-layer="5"]),
+.anatomy:has(.anatomy-legend li:nth-child(6):hover)
+  .anatomy-svg
+  [data-layer]:not([data-layer="6"]) {
+  opacity: 0.25;
 }

@@ -1,0 +1,14 @@
+{
+  "redirects": [
+    {
+      "source": "/attic-insulation-process/",
+      "destination": "/roof-replacement-process/",
+      "permanent": true
+    },
+    {
+      "source": "/attic-insulation-process",
+      "destination": "/roof-replacement-process/",
+      "permanent": true
+    }
+  ]
+}

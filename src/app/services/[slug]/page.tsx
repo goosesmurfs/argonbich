@@ -7,7 +7,7 @@ import LeadForm from "@/components/LeadForm";
 import CtaBand from "@/components/CtaBand";
 import JsonLd from "@/components/JsonLd";
 import { services, getService } from "@/lib/services";
-import { faqSchema } from "@/lib/schema";
+import { faqSchema, serviceSchema } from "@/lib/schema";
 import { site } from "@/lib/site";
 import { CheckIcon } from "@/components/Icons";
 
@@ -48,7 +48,7 @@ export default async function ServicePage({
 
   return (
     <>
-      <JsonLd data={faqSchema(service.faqs)} />
+      <JsonLd data={[serviceSchema(service), faqSchema(service.faqs)]} />
 
       <div className="page-hero">
         <Breadcrumbs

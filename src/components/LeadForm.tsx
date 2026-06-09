@@ -3,16 +3,19 @@ import { services } from "@/lib/services";
 
 /*
  * Plain HTML form so it renders and submits without JavaScript.
- * The mailto action opens the visitor's email client pre-addressed to the
- * shop inbox; swap the action for a form backend endpoint when one is set up.
+ * Set NEXT_PUBLIC_FORM_ENDPOINT at build time (Formspree, Basin, or any
+ * form backend that accepts a POST) to collect leads server-side; until
+ * then it falls back to a mailto: handoff so the static site still works.
  */
+const endpoint = process.env.NEXT_PUBLIC_FORM_ENDPOINT;
+
 export default function LeadForm({ heading }: { heading?: string }) {
   return (
     <form
       className="lead-form"
-      action={`mailto:${site.email}`}
+      action={endpoint ?? `mailto:${site.email}`}
       method="post"
-      encType="text/plain"
+      encType={endpoint ? undefined : "text/plain"}
       aria-label={heading ?? "Request a free estimate"}
     >
       <div className="form-row">

@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CtaBand from "@/components/CtaBand";
+import JsonLd from "@/components/JsonLd";
 import { services } from "@/lib/services";
+import { offerCatalogSchema } from "@/lib/schema";
 import { RoofIcon, HammerIcon, StormIcon } from "@/components/Icons";
 
 export const metadata: Metadata = {
@@ -27,6 +29,7 @@ const serviceIcons: Record<string, React.ReactNode> = {
 export default function ServicesPage() {
   return (
     <>
+      <JsonLd data={offerCatalogSchema([...services])} />
       <div className="page-hero">
         <Breadcrumbs items={[{ name: "Services", path: "/services/" }]} />
         <div className="container" style={{ paddingTop: "2rem" }}>
@@ -69,7 +72,9 @@ export default function ServicesPage() {
             <Link href="/roof-replacement-process/">
               five-step replacement process
             </Link>{" "}
-            to see how the pieces fit together.
+            to see how the pieces fit together, or read the{" "}
+            <Link href="/roof-replacement-cost/">Indianapolis cost guide</Link>{" "}
+            to understand the numbers before anyone quotes you.
           </p>
         </div>
       </section>

@@ -16,11 +16,18 @@ export function localBusinessSchema() {
     foundingDate: site.founded,
     founder: { "@type": "Person", name: site.owner },
     image: `${site.url}/opengraph-image`,
+    logo: `${site.url}/icon.svg`,
+    priceRange: "$$",
     address: {
       "@type": "PostalAddress",
       addressLocality: site.city,
       addressRegion: site.state,
       addressCountry: "US",
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: 39.7684,
+      longitude: -86.1581,
     },
     areaServed: cities.map((c) => ({
       "@type": "City",
@@ -39,6 +46,49 @@ export function localBusinessSchema() {
       "Hail damage inspection",
       "Drone roof inspection",
     ],
+  };
+}
+
+export function serviceSchema(service: {
+  slug: string;
+  name: string;
+  teaser: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${site.url}/services/${service.slug}/#service`,
+    name: service.name,
+    serviceType: service.name,
+    description: service.teaser,
+    url: `${site.url}/services/${service.slug}/`,
+    provider: { "@id": `${site.url}/#business` },
+    areaServed: cities.map((c) => ({
+      "@type": "City",
+      name: `${c.name}, IN`,
+    })),
+  };
+}
+
+export function offerCatalogSchema(
+  items: { slug: string; name: string; teaser: string }[],
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "OfferCatalog",
+    name: "Roofing Services",
+    url: `${site.url}/services/`,
+    itemListElement: items.map((s, i) => ({
+      "@type": "Offer",
+      position: i + 1,
+      itemOffered: {
+        "@type": "Service",
+        name: s.name,
+        description: s.teaser,
+        url: `${site.url}/services/${s.slug}/`,
+        provider: { "@id": `${site.url}/#business` },
+      },
+    })),
   };
 }
 

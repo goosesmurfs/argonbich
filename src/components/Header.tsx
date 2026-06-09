@@ -5,6 +5,7 @@ import { site } from "@/lib/site";
 const navLinks = [
   { href: "/services/", label: "Services" },
   { href: "/roof-replacement-process/", label: "Our Process" },
+  { href: "/roof-replacement-cost/", label: "Pricing" },
   { href: "/areas/", label: "Service Areas" },
   { href: "/about/", label: "About" },
   { href: "/blog/", label: "Blog" },
