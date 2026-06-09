@@ -7,7 +7,7 @@ const layers = [
   {
     num: "02",
     title: "Ice & Water Shield",
-    body: "Self-sealing membrane along the roof edges and valleys, where Indiana freeze-thaw pushes water backward under shingles.",
+    body: "Self-sealing membrane along the eaves and valleys, where Indiana freeze-thaw pushes water backward under shingles.",
   },
   {
     num: "03",
@@ -31,52 +31,68 @@ const layers = [
   },
 ] as const;
 
-/* Isometric sheet geometry: parallelogram with corners
-   L(100,cy)  T(300,cy-62)  R(500,cy)  B(300,cy+62), plus a 12px thickness. */
-const HW = 200; // half width
-const HD = 62; // half depth
-const TH = 12; // sheet thickness
+/* ------------------------------------------------------------------ */
+/* Isometric roof-plane geometry.                                      */
+/* The visible roof plane is parameterized as P(a, b) where a runs     */
+/* along the ridge (0 = left/front, 1 = right/back) and b runs down    */
+/* the slope (0 = ridge, 1 = eave).                                    */
+const RF = { x: 150, y: 150 }; // ridge, front corner
+const U = { x: 385, y: 97 }; // along the ridge
+const S = { x: 170, y: 165 }; // down the slope
+const WALL = 84; // wall height below the eaves
 
-function sheetPoints(cy: number) {
+function P(a: number, b: number) {
   return {
-    top: `100,${cy} 300,${cy - HD} 500,${cy} 300,${cy + HD}`,
-    leftFace: `100,${cy} 300,${cy + HD} 300,${cy + HD + TH} 100,${cy + TH}`,
-    rightFace: `500,${cy} 300,${cy + HD} 300,${cy + HD + TH} 500,${cy + TH}`,
+    x: RF.x + a * U.x + b * S.x,
+    y: RF.y + a * U.y + b * S.y,
   };
 }
 
-/* a line across the sheet parallel to the left-top edge, at fraction t of
-   the depth axis */
-function rowLine(cy: number, t: number) {
-  const x1 = 100 + HW * t;
-  const y1 = cy + HD * t;
-  return `M${x1} ${y1} l${HW} ${-HD}`;
+function pt(a: number, b: number) {
+  const p = P(a, b);
+  return `${p.x.toFixed(1)},${p.y.toFixed(1)}`;
 }
 
-/* a line parallel to the left-bottom edge, at fraction s of the width axis */
-function tabLine(cy: number, s: number) {
-  const x1 = 100 + HW * s;
-  const y1 = cy - HD * s;
-  return `M${x1} ${y1} l${HW} ${HD}`;
+function quad(a1: number, b1: number, a2: number, b2: number) {
+  return `${pt(a1, b1)} ${pt(a2, b1)} ${pt(a2, b2)} ${pt(a1, b2)}`;
 }
 
-function Sheet({
-  cy,
-  fill,
-  edge,
-}: {
-  cy: number;
-  fill: string;
-  edge: string;
-}) {
-  const p = sheetPoints(cy);
-  return (
-    <>
-      <polygon points={p.leftFace} fill={edge} stroke="#39424E" strokeWidth="1" />
-      <polygon points={p.rightFace} fill={edge} stroke="#39424E" strokeWidth="1" />
-      <polygon points={p.top} fill={fill} stroke="#5E6878" strokeWidth="1.5" />
-    </>
-  );
+/* line down the slope at ridge position a, between b1 and b2 */
+function slopeLine(a: number, b1: number, b2: number) {
+  const p1 = P(a, b1);
+  const p2 = P(a, b2);
+  return `M${p1.x.toFixed(1)} ${p1.y.toFixed(1)} L${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`;
+}
+
+/* line along the ridge direction at slope position b, between a1 and a2 */
+function ridgeLine(b: number, a1: number, a2: number) {
+  const p1 = P(a1, b);
+  const p2 = P(a2, b);
+  return `M${p1.x.toFixed(1)} ${p1.y.toFixed(1)} L${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`;
+}
+
+/* house body corners */
+const EF = P(0, 1); // front-left eave corner
+const EB = P(1, 1); // back-right eave corner
+const EO = { x: 30, y: 250 }; // far eave of the hidden slope (gable end)
+
+/* chimney: a vertical box seated on the shingle field */
+const CH = { a1: 0.68, a2: 0.76, b1: 0.28, b2: 0.4, h: 90 };
+const chA = P(CH.a1, CH.b1);
+const chB = P(CH.a2, CH.b1);
+const chC = P(CH.a2, CH.b2);
+const chD = P(CH.a1, CH.b2);
+
+function up(p: { x: number; y: number }, h: number) {
+  return { x: p.x, y: p.y - h };
+}
+const chA2 = up(chA, CH.h);
+const chB2 = up(chB, CH.h);
+const chC2 = up(chC, CH.h);
+const chD2 = up(chD, CH.h);
+
+function poly(points: { x: number; y: number }[]) {
+  return points.map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(" ");
 }
 
 function Marker({ x, y, num }: { x: number; y: number; num: string }) {
@@ -124,18 +140,37 @@ function SideLabel({
   );
 }
 
-/* sheet vertical positions, top of stack to bottom */
-const SHINGLES_Y = 130;
-const UNDERLAY_Y = 250;
-const MEMBRANE_Y = 370;
-const DECK_Y = 490;
+function Leader({
+  x1,
+  y1,
+  a,
+  b,
+}: {
+  x1: number;
+  y1: number;
+  a: number;
+  b: number;
+}) {
+  const p = P(a, b);
+  return (
+    <line
+      x1={x1}
+      y1={y1}
+      x2={p.x}
+      y2={p.y}
+      stroke="#46505E"
+      strokeWidth="1.2"
+    />
+  );
+}
 
 /*
- * Exploded view of a roof system: the four sheet layers float in build
- * order with the flashing and ventilation called out on top. Layer
- * highlighting is CSS-only (hover/:has in globals.css), and the full
- * explanation always lives in the visible legend, so nothing depends on
- * hover or JavaScript.
+ * A gable roof drawn in isometric view with the covering peeled back in
+ * stages, left to right: bare decking, ice and water shield at the eave,
+ * synthetic underlayment, then the finished shingle field with ridge cap,
+ * chimney flashing, and attic airflow. Layer highlighting is CSS-only
+ * (hover/:has in globals.css) and the full explanation always lives in
+ * the visible legend, so nothing depends on hover or JavaScript.
  */
 export default function RoofAnatomy() {
   return (
@@ -143,147 +178,195 @@ export default function RoofAnatomy() {
       <figure className="anatomy-figure" style={{ margin: 0 }}>
         <svg
           className="anatomy-svg"
-          viewBox="0 0 760 620"
+          viewBox="0 0 760 560"
           role="img"
-          aria-label="Exploded diagram of a complete roof system: decking at the bottom, then ice and water shield, synthetic underlayment, and shingles, with flashing and ventilation called out on top"
+          aria-label="Diagram of a house roof with the layers peeled back in stages: bare decking, ice and water shield at the eave, synthetic underlayment, and the finished shingle field, with chimney flashing and attic ventilation called out"
         >
-          {/* dashed guides showing the layers stack onto each other */}
-          <g stroke="#2A3340" strokeWidth="1.5" strokeDasharray="5 7">
-            <path d={`M100 ${SHINGLES_Y} V${DECK_Y}`} />
-            <path d={`M500 ${SHINGLES_Y} V${DECK_Y}`} />
-            <path d={`M300 ${SHINGLES_Y + HD} V${DECK_Y + HD}`} />
-          </g>
+          {/* house body */}
+          <polygon
+            points={`${EO.x},${EO.y} ${RF.x},${RF.y} ${pt(0, 1)} ${EF.x},${EF.y + WALL} ${EO.x},${EO.y + WALL}`}
+            fill="#11151B"
+            stroke="#2A3340"
+            strokeWidth="1.5"
+          />
+          <polygon
+            points={`${pt(0, 1)} ${pt(1, 1)} ${EB.x},${EB.y + WALL} ${EF.x},${EF.y + WALL}`}
+            fill="#151A21"
+            stroke="#2A3340"
+            strokeWidth="1.5"
+          />
 
-          {/* 01 decking (bottom) */}
+          {/* 01 decking: bare wood on the first peel zone */}
           <g data-layer="1">
-            <Sheet cy={DECK_Y} fill="#241B10" edge="#1A130B" />
+            <polygon points={quad(0, 0, 0.38, 1)} fill="#302615" />
             <g stroke="#564326" strokeWidth="1.5" fill="none">
-              <path d={rowLine(DECK_Y, 0.25)} />
-              <path d={rowLine(DECK_Y, 0.5)} />
-              <path d={rowLine(DECK_Y, 0.75)} />
+              <path d={slopeLine(0.06, 0, 1)} />
+              <path d={slopeLine(0.12, 0, 1)} />
+              <path d={slopeLine(0.24, 0, 0.55)} />
+              <path d={slopeLine(0.3, 0, 0.55)} />
             </g>
-            <path
-              d={`M500 ${DECK_Y} h47`}
-              stroke="#39424E"
-              strokeWidth="1"
-            />
-            <Marker x={560} y={DECK_Y} num="01" />
-            <SideLabel x={582} y={DECK_Y + 4} text="Decking" />
+            <Leader x1={170} y1={73} a={0.09} b={0.18} />
+            <Marker x={170} y={60} num="01" />
+            <SideLabel x={192} y={64} text="Decking" />
           </g>
 
-          {/* 02 ice & water shield */}
+          {/* 02 ice & water shield: membrane band along the eave */}
           <g data-layer="2">
-            <Sheet cy={MEMBRANE_Y} fill="#2B1D12" edge="#1E150C" />
-            {/* self-sealing band along the eave edge */}
+            <polygon points={quad(0.18, 0.55, 0.58, 1)} fill="#94521F" />
             <path
-              d={`M108 ${MEMBRANE_Y + 7} L296 ${MEMBRANE_Y + HD - 1}`}
+              d={ridgeLine(0.55, 0.18, 0.58)}
               stroke="#FF6B2B"
-              strokeWidth="7"
-              strokeLinecap="round"
-              opacity="0.85"
+              strokeWidth="2.5"
+              fill="none"
             />
             <path
-              d={`M500 ${MEMBRANE_Y} h47`}
-              stroke="#39424E"
-              strokeWidth="1"
+              d={slopeLine(0.18, 0.55, 1)}
+              stroke="#76808E"
+              strokeWidth="2"
+              fill="none"
             />
-            <Marker x={560} y={MEMBRANE_Y} num="02" />
-            <SideLabel x={582} y={MEMBRANE_Y + 4} text="Ice & water" />
+            <Leader x1={300} y1={95} a={0.3} b={0.62} />
+            <Marker x={300} y={82} num="02" />
+            <SideLabel x={322} y={86} text="Ice & water" />
           </g>
 
           {/* 03 synthetic underlayment */}
           <g data-layer="3">
-            <Sheet cy={UNDERLAY_Y} fill="#232A33" edge="#1A2028" />
+            <polygon points={quad(0.38, 0, 0.58, 0.88)} fill="#3A4450" />
             <g
-              stroke="#46505E"
+              stroke="#5E6878"
               strokeWidth="1.5"
-              strokeDasharray="9 6"
+              strokeDasharray="8 5"
               fill="none"
             >
-              <path d={rowLine(UNDERLAY_Y, 0.33)} />
-              <path d={rowLine(UNDERLAY_Y, 0.66)} />
+              <path d={ridgeLine(0.3, 0.38, 0.58)} />
+              <path d={ridgeLine(0.6, 0.38, 0.58)} />
             </g>
             <path
-              d={`M500 ${UNDERLAY_Y} h47`}
-              stroke="#39424E"
-              strokeWidth="1"
+              d={slopeLine(0.38, 0, 0.88)}
+              stroke="#76808E"
+              strokeWidth="2"
+              fill="none"
             />
-            <Marker x={560} y={UNDERLAY_Y} num="03" />
-            <SideLabel x={582} y={UNDERLAY_Y + 4} text="Underlayment" />
+            <path
+              d={ridgeLine(0.88, 0.38, 0.58)}
+              stroke="#76808E"
+              strokeWidth="1.5"
+              fill="none"
+            />
+            <Leader x1={435} y1={121} a={0.48} b={0.25} />
+            <Marker x={435} y={108} num="03" />
+            <SideLabel x={457} y={112} text="Underlayment" />
           </g>
 
-          {/* 04 shingles (top of stack) */}
+          {/* 04 shingles: finished field + ridge cap */}
           <g data-layer="4">
-            <Sheet cy={SHINGLES_Y} fill="#2E3640" edge="#222932" />
-            {/* shingle course grid */}
+            <polygon points={quad(0.58, 0, 1, 1)} fill="#2E3640" />
             <g stroke="#454F5C" strokeWidth="1.5" fill="none">
-              <path d={rowLine(SHINGLES_Y, 0.25)} />
-              <path d={rowLine(SHINGLES_Y, 0.5)} />
-              <path d={rowLine(SHINGLES_Y, 0.75)} />
-              <path d={tabLine(SHINGLES_Y, 0.33)} />
-              <path d={tabLine(SHINGLES_Y, 0.66)} />
+              <path d={ridgeLine(0.18, 0.58, 1)} />
+              <path d={ridgeLine(0.36, 0.58, 1)} />
+              <path d={ridgeLine(0.54, 0.58, 1)} />
+              <path d={ridgeLine(0.72, 0.58, 1)} />
+              <path d={ridgeLine(0.9, 0.58, 1)} />
+            </g>
+            <g stroke="#3A4450" strokeWidth="1" fill="none">
+              <path d={slopeLine(0.68, 0, 1)} />
+              <path d={slopeLine(0.78, 0, 1)} />
+              <path d={slopeLine(0.88, 0, 1)} />
             </g>
             <path
-              d={`M500 ${SHINGLES_Y} h47`}
-              stroke="#39424E"
-              strokeWidth="1"
+              d={slopeLine(0.58, 0, 1)}
+              stroke="#76808E"
+              strokeWidth="2.5"
+              fill="none"
             />
-            <Marker x={560} y={SHINGLES_Y} num="04" />
-            <SideLabel x={582} y={SHINGLES_Y + 4} text="Shingles" />
-          </g>
-
-          {/* 05 chimney with step flashing, seated on the shingle layer */}
-          <g data-layer="5">
-            <rect
-              x="356"
-              y="42"
-              width="40"
-              height="62"
-              fill="#161C24"
+            {/* ridge cap over the finished section */}
+            <polygon
+              points={quad(0.55, 0, 1, 0.065)}
+              fill="#444F5C"
               stroke="#5E6878"
               strokeWidth="1.5"
             />
-            <path d="M350 42h52" stroke="#5E6878" strokeWidth="4" />
-            {/* step flashing at the base */}
-            <path
-              d="M348 110 l12 -6 v-9 l12 -6 v-9 l12 -6"
-              stroke="#FF6B2B"
-              strokeWidth="3"
-              fill="none"
-            />
-            <path d="M396 56 h26" stroke="#39424E" strokeWidth="1" />
-            <Marker x={435} y={56} num="05" />
-            <SideLabel x={457} y={60} text="Flashing" />
+            <g stroke="#2E3640" strokeWidth="1.5" fill="none">
+              <path d={slopeLine(0.64, 0, 0.065)} />
+              <path d={slopeLine(0.73, 0, 0.065)} />
+              <path d={slopeLine(0.82, 0, 0.065)} />
+              <path d={slopeLine(0.91, 0, 0.065)} />
+            </g>
+            <Leader x1={712} y1={332} a={0.97} b={0.6} />
+            <Marker x={725} y={330} num="04" />
+            <SideLabel x={725} y={302} text="Shingles" anchor="end" />
           </g>
 
-          {/* 06 ventilation: intake at the eave, exhaust at the ridge */}
-          <g data-layer="6">
-            {/* exhaust arrow rising from the shingle layer's ridge corner */}
-            <path
-              d={`M186 ${SHINGLES_Y - 30} q10 -22 28 -34`}
-              stroke="#FF6B2B"
-              strokeWidth="2.5"
-              fill="none"
-            />
-            <polygon points="222,58 204,62 212,74" fill="#FF6B2B" />
-            {/* intake arrow sweeping under the decking layer */}
-            <path
-              d={`M70 ${DECK_Y + 92} q26 -8 44 -28`}
-              stroke="#FF6B2B"
-              strokeWidth="2.5"
-              fill="none"
+          {/* roof plane outline + drip edge at the eave */}
+          <polygon
+            points={quad(0, 0, 1, 1)}
+            fill="none"
+            stroke="#5E6878"
+            strokeWidth="1.5"
+          />
+          <path
+            d={ridgeLine(1, 0, 1)}
+            stroke="#5E6878"
+            strokeWidth="3.5"
+            fill="none"
+          />
+
+          {/* 05 chimney with step flashing */}
+          <g data-layer="5">
+            <polygon
+              points={poly([chA, chD, chD2, chA2])}
+              fill="#1A2028"
+              stroke="#5E6878"
+              strokeWidth="1.5"
             />
             <polygon
-              points={`120,${DECK_Y + 56} 104,${DECK_Y + 62} 114,${DECK_Y + 73}`}
-              fill="#FF6B2B"
+              points={poly([chD, chC, chC2, chD2])}
+              fill="#12161C"
+              stroke="#5E6878"
+              strokeWidth="1.5"
             />
-            <SideLabel
-              x={64}
-              y={DECK_Y + 110}
-              text="Air in"
+            <polygon
+              points={poly([chA2, chB2, chC2, chD2])}
+              fill="#222932"
+              stroke="#5E6878"
+              strokeWidth="1.5"
             />
-            <SideLabel x={232} y={48} text="Air out" />
-            <Marker x={160} y={66} num="06" />
+            {/* flashing seam where the chimney meets the roof */}
+            <polyline
+              points={poly([chA, chD, chC])}
+              stroke="#FF6B2B"
+              strokeWidth="3.5"
+              fill="none"
+              strokeLinejoin="round"
+              strokeLinecap="round"
+            />
+            <Leader x1={563} y1={156} a={CH.a2} b={CH.b1} />
+            <Marker x={572} y={150} num="05" />
+            <SideLabel x={594} y={154} text="Flashing" />
+          </g>
+
+          {/* 06 ventilation: soffit intake, ridge exhaust */}
+          <g data-layer="6">
+            {/* intake rising into the soffit under the eave */}
+            <path
+              d="M382 480 Q368 420 363 345"
+              stroke="#FF6B2B"
+              strokeWidth="2.5"
+              fill="none"
+            />
+            <polygon points="361,334 354,350 372,347" fill="#FF6B2B" />
+            <Marker x={352} y={500} num="06" />
+            <SideLabel x={374} y={504} text="Air in" />
+            {/* exhaust leaving the ridge cap */}
+            <path
+              d="M542 238 Q560 218 572 198"
+              stroke="#FF6B2B"
+              strokeWidth="2.5"
+              fill="none"
+            />
+            <polygon points="576,190 562,196 574,206" fill="#FF6B2B" />
+            <SideLabel x={590} y={200} text="Air out" />
           </g>
         </svg>
         <figcaption
@@ -297,7 +380,7 @@ export default function RoofAnatomy() {
             textAlign: "center",
           }}
         >
-          Fig. A / The Ridgeline roof system, exploded view, bottom to top
+          Fig. A / The Ridgeline roof system, peeled back layer by layer
         </figcaption>
       </figure>
 
