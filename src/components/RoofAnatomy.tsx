@@ -41,6 +41,11 @@ const U = { x: 385, y: 97 }; // along the ridge
 const S = { x: 170, y: 165 }; // down the slope
 const WALL = 84; // wall height below the eaves
 
+/* unit vectors, used to map texture patterns onto the tilted planes */
+const UH = { x: 0.9697, y: 0.2443 };
+const SH = { x: 0.7176, y: 0.6965 };
+const PLANE_TX = `matrix(${UH.x},${UH.y},${SH.x},${SH.y},${RF.x},${RF.y})`;
+
 function P(a: number, b: number) {
   return {
     x: RF.x + a * U.x + b * S.x,
@@ -77,7 +82,7 @@ const EB = P(1, 1); // back-right eave corner
 const EO = { x: 30, y: 250 }; // far eave of the hidden slope (gable end)
 
 /* chimney: a vertical box seated on the shingle field */
-const CH = { a1: 0.68, a2: 0.76, b1: 0.28, b2: 0.4, h: 90 };
+const CH = { a1: 0.68, a2: 0.76, b1: 0.28, b2: 0.4, h: 88 };
 const chA = P(CH.a1, CH.b1);
 const chB = P(CH.a2, CH.b1);
 const chC = P(CH.a2, CH.b2);
@@ -158,19 +163,20 @@ function Leader({
       y1={y1}
       x2={p.x}
       y2={p.y}
-      stroke="#46505E"
+      stroke="#78818D"
       strokeWidth="1.2"
     />
   );
 }
 
 /*
- * A gable roof drawn in isometric view with the covering peeled back in
- * stages, left to right: bare decking, ice and water shield at the eave,
- * synthetic underlayment, then the finished shingle field with ridge cap,
- * chimney flashing, and attic airflow. Layer highlighting is CSS-only
- * (hover/:has in globals.css) and the full explanation always lives in
- * the visible legend, so nothing depends on hover or JavaScript.
+ * A realistically rendered gable roof in isometric view with the covering
+ * peeled back in stages, left to right: bare wood decking, ice and water
+ * shield at the eave, synthetic underlayment, then the finished shingle
+ * field with ridge cap, brick chimney with flashing, and attic airflow.
+ * Textures are SVG patterns mapped onto the roof plane; highlighting is
+ * CSS-only (hover/:has in globals.css) and the full explanation always
+ * lives in the visible legend, so nothing depends on hover or JavaScript.
  */
 export default function RoofAnatomy() {
   return (
@@ -180,30 +186,211 @@ export default function RoofAnatomy() {
           className="anatomy-svg"
           viewBox="0 0 760 560"
           role="img"
-          aria-label="Diagram of a house roof with the layers peeled back in stages: bare decking, ice and water shield at the eave, synthetic underlayment, and the finished shingle field, with chimney flashing and attic ventilation called out"
+          aria-label="Illustration of a house roof with the layers peeled back in stages: bare wood decking, ice and water shield at the eave, synthetic underlayment, and the finished shingle field, with brick chimney flashing and attic ventilation called out"
         >
-          {/* house body */}
+          <defs>
+            <radialGradient id="rfGlow" cx="0.5" cy="0.5" r="0.6">
+              <stop offset="0" stopColor="#2E3845" stopOpacity="0.85" />
+              <stop offset="1" stopColor="#2E3845" stopOpacity="0" />
+            </radialGradient>
+            <linearGradient
+              id="rfRoofShade"
+              gradientUnits="userSpaceOnUse"
+              x1={P(0.5, 0).x}
+              y1={P(0.5, 0).y}
+              x2={P(0.5, 1).x}
+              y2={P(0.5, 1).y}
+            >
+              <stop offset="0" stopColor="#FFFFFF" stopOpacity="0.16" />
+              <stop offset="0.45" stopColor="#FFFFFF" stopOpacity="0" />
+              <stop offset="1" stopColor="#000000" stopOpacity="0.22" />
+            </linearGradient>
+            <linearGradient
+              id="rfMembrane"
+              gradientUnits="userSpaceOnUse"
+              x1={P(0.38, 0.55).x}
+              y1={P(0.38, 0.55).y}
+              x2={P(0.38, 1).x}
+              y2={P(0.38, 1).y}
+            >
+              <stop offset="0" stopColor="#CB6420" />
+              <stop offset="1" stopColor="#7E3C12" />
+            </linearGradient>
+            <linearGradient id="rfEaveShadow" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stopColor="#000000" stopOpacity="0.5" />
+              <stop offset="1" stopColor="#000000" stopOpacity="0" />
+            </linearGradient>
+            <linearGradient id="rfMetal" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stopColor="#D7DCE2" />
+              <stop offset="1" stopColor="#848D98" />
+            </linearGradient>
+            <pattern
+              id="rfShingles"
+              width="56"
+              height="30"
+              patternUnits="userSpaceOnUse"
+              patternTransform={PLANE_TX}
+            >
+              <rect width="56" height="15" fill="#49515C" />
+              <rect y="13" width="56" height="2.2" fill="#22272E" />
+              <rect x="13.5" width="1.6" height="15" fill="#2B313A" />
+              <rect x="27.5" width="1.6" height="15" fill="#2B313A" />
+              <rect x="41.5" width="1.6" height="15" fill="#2B313A" />
+              <rect y="15" width="56" height="15" fill="#434B56" />
+              <rect y="28" width="56" height="2.2" fill="#22272E" />
+              <rect x="6.5" y="15" width="1.6" height="15" fill="#2B313A" />
+              <rect x="20.5" y="15" width="1.6" height="15" fill="#2B313A" />
+              <rect x="34.5" y="15" width="1.6" height="15" fill="#2B313A" />
+              <rect x="48.5" y="15" width="1.6" height="15" fill="#2B313A" />
+            </pattern>
+            <pattern
+              id="rfUnderlay"
+              width="26"
+              height="26"
+              patternUnits="userSpaceOnUse"
+              patternTransform={PLANE_TX}
+            >
+              <rect width="26" height="26" fill="#C7CDD5" />
+              <path
+                d="M0 0H26M0 13H26M0 0V26M13 0V26"
+                stroke="#A2ABB6"
+                strokeWidth="0.8"
+                fill="none"
+              />
+            </pattern>
+            <pattern
+              id="rfDeck"
+              width="48"
+              height="16"
+              patternUnits="userSpaceOnUse"
+              patternTransform={PLANE_TX}
+            >
+              <rect width="48" height="16" fill="#C09A5C" />
+              <path
+                d="M0 4 Q12 2 24 4 T48 4M0 11 Q14 13 28 11 T48 11"
+                stroke="#A37F47"
+                strokeWidth="1"
+                fill="none"
+              />
+            </pattern>
+            <pattern
+              id="rfBrickFront"
+              width="30"
+              height="11"
+              patternUnits="userSpaceOnUse"
+              patternTransform={`matrix(${UH.x},${UH.y},0,1,${chD.x},${chD.y})`}
+            >
+              <rect width="30" height="11" fill="#6B3A26" />
+              <rect x="0.6" y="0.6" width="13.8" height="4.4" fill="#9C523A" />
+              <rect x="15.4" y="0.6" width="13.8" height="4.4" fill="#96503A" />
+              <rect x="-7" y="5.8" width="13.8" height="4.4" fill="#98513A" />
+              <rect x="7.8" y="5.8" width="13.8" height="4.4" fill="#9C523A" />
+              <rect x="22.6" y="5.8" width="13.8" height="4.4" fill="#944E37" />
+            </pattern>
+            <pattern
+              id="rfBrickSide"
+              width="30"
+              height="11"
+              patternUnits="userSpaceOnUse"
+              patternTransform={`matrix(${SH.x},${SH.y},0,1,${chA.x},${chA.y})`}
+            >
+              <rect width="30" height="11" fill="#462515" />
+              <rect x="0.6" y="0.6" width="13.8" height="4.4" fill="#73402C" />
+              <rect x="15.4" y="0.6" width="13.8" height="4.4" fill="#6E3D2A" />
+              <rect x="-7" y="5.8" width="13.8" height="4.4" fill="#704029" />
+              <rect x="7.8" y="5.8" width="13.8" height="4.4" fill="#73402C" />
+              <rect x="22.6" y="5.8" width="13.8" height="4.4" fill="#6A3B28" />
+            </pattern>
+            <filter id="rfBlur" x="-40%" y="-40%" width="180%" height="180%">
+              <feGaussianBlur stdDeviation="6" />
+            </filter>
+            <clipPath id="rfClipGable">
+              <polygon
+                points={`${EO.x},${EO.y} ${RF.x},${RF.y} ${pt(0, 1)} ${EF.x},${EF.y + WALL} ${EO.x},${EO.y + WALL}`}
+              />
+            </clipPath>
+            <clipPath id="rfClipFront">
+              <polygon
+                points={`${pt(0, 1)} ${pt(1, 1)} ${EB.x},${EB.y + WALL} ${EF.x},${EF.y + WALL}`}
+              />
+            </clipPath>
+          </defs>
+
+          {/* backdrop glow + ground shadow */}
+          <rect x="0" y="0" width="760" height="560" fill="url(#rfGlow)" />
+          <ellipse
+            cx="400"
+            cy={EB.y + WALL + 18}
+            rx="330"
+            ry="24"
+            fill="#000000"
+            opacity="0.5"
+            filter="url(#rfBlur)"
+          />
+
+          {/* house body: gable end (lit) and front wall (shaded) */}
           <polygon
             points={`${EO.x},${EO.y} ${RF.x},${RF.y} ${pt(0, 1)} ${EF.x},${EF.y + WALL} ${EO.x},${EO.y + WALL}`}
-            fill="#11151B"
-            stroke="#2A3340"
-            strokeWidth="1.5"
+            fill="#9A9286"
+            stroke="#4A453E"
+            strokeWidth="1"
           />
+          <g clipPath="url(#rfClipGable)" stroke="#00000022" strokeWidth="1.2">
+            {[196, 209, 222, 235, 248, 261, 274, 287, 300, 313, 326].map(
+              (k) => (
+                <path key={k} d={`M20 ${k} l300 67`} fill="none" />
+              ),
+            )}
+          </g>
           <polygon
             points={`${pt(0, 1)} ${pt(1, 1)} ${EB.x},${EB.y + WALL} ${EF.x},${EF.y + WALL}`}
-            fill="#151A21"
-            stroke="#2A3340"
-            strokeWidth="1.5"
+            fill="#7E766B"
+            stroke="#4A453E"
+            strokeWidth="1"
+          />
+          <g clipPath="url(#rfClipFront)" stroke="#00000026" strokeWidth="1.2">
+            {[14, 27, 40, 53, 66, 79].map((k) => (
+              <path
+                key={k}
+                d={`M${EF.x} ${EF.y + k} L${EB.x} ${EB.y + k}`}
+                fill="none"
+              />
+            ))}
+          </g>
+
+          {/* gable window */}
+          <g>
+            <polygon
+              points="138,283 184,293 184,329 138,319"
+              fill="#27353F"
+              stroke="#D9D3C8"
+              strokeWidth="3"
+            />
+            <path d="M161 288 V324 M138 301 L184 311" stroke="#D9D3C8" strokeWidth="1.6" />
+            <path d="M142 288 L156 318" stroke="#FFFFFF" strokeWidth="3" opacity="0.14" />
+          </g>
+
+          {/* shadow cast by the eaves onto the front wall */}
+          <polygon
+            points={`${pt(0, 1)} ${pt(1, 1)} ${EB.x},${EB.y + 18} ${EF.x},${EF.y + 18}`}
+            fill="url(#rfEaveShadow)"
+          />
+
+          {/* fascia board along the eave */}
+          <polygon
+            points={`${pt(0, 1)} ${pt(1, 1)} ${EB.x},${EB.y + 11} ${EF.x},${EF.y + 11}`}
+            fill="#D9D3C8"
+            stroke="#8E887D"
+            strokeWidth="0.8"
           />
 
           {/* 01 decking: bare wood on the first peel zone */}
           <g data-layer="1">
-            <polygon points={quad(0, 0, 0.38, 1)} fill="#302615" />
-            <g stroke="#564326" strokeWidth="1.5" fill="none">
-              <path d={slopeLine(0.06, 0, 1)} />
+            <polygon points={quad(0, 0, 0.38, 1)} fill="url(#rfDeck)" />
+            <g stroke="#8F6F3E" strokeWidth="1.5" fill="none">
               <path d={slopeLine(0.12, 0, 1)} />
               <path d={slopeLine(0.24, 0, 0.55)} />
-              <path d={slopeLine(0.3, 0, 0.55)} />
+              <path d={ridgeLine(0.5, 0, 0.24)} />
             </g>
             <Leader x1={170} y1={73} a={0.09} b={0.18} />
             <Marker x={170} y={60} num="01" />
@@ -212,17 +399,18 @@ export default function RoofAnatomy() {
 
           {/* 02 ice & water shield: membrane band along the eave */}
           <g data-layer="2">
-            <polygon points={quad(0.18, 0.55, 0.58, 1)} fill="#94521F" />
+            <polygon points={quad(0.18, 0.55, 0.58, 1)} fill="url(#rfMembrane)" />
             <path
               d={ridgeLine(0.55, 0.18, 0.58)}
-              stroke="#FF6B2B"
+              stroke="#FF8B45"
               strokeWidth="2.5"
               fill="none"
             />
+            {/* peeled edge */}
             <path
               d={slopeLine(0.18, 0.55, 1)}
-              stroke="#76808E"
-              strokeWidth="2"
+              stroke="#E8E2D4"
+              strokeWidth="2.5"
               fill="none"
             />
             <Leader x1={300} y1={95} a={0.3} b={0.62} />
@@ -230,28 +418,20 @@ export default function RoofAnatomy() {
             <SideLabel x={322} y={86} text="Ice & water" />
           </g>
 
-          {/* 03 synthetic underlayment */}
+          {/* 03 synthetic underlayment with printed grid */}
           <g data-layer="3">
-            <polygon points={quad(0.38, 0, 0.58, 0.88)} fill="#3A4450" />
-            <g
-              stroke="#5E6878"
-              strokeWidth="1.5"
-              strokeDasharray="8 5"
-              fill="none"
-            >
-              <path d={ridgeLine(0.3, 0.38, 0.58)} />
-              <path d={ridgeLine(0.6, 0.38, 0.58)} />
-            </g>
-            <path
-              d={slopeLine(0.38, 0, 0.88)}
-              stroke="#76808E"
-              strokeWidth="2"
-              fill="none"
-            />
+            <polygon points={quad(0.38, 0, 0.58, 0.88)} fill="url(#rfUnderlay)" />
             <path
               d={ridgeLine(0.88, 0.38, 0.58)}
-              stroke="#76808E"
+              stroke="#8B939E"
               strokeWidth="1.5"
+              fill="none"
+            />
+            {/* peeled edge */}
+            <path
+              d={slopeLine(0.38, 0, 0.88)}
+              stroke="#E8E2D4"
+              strokeWidth="2.5"
               fill="none"
             />
             <Leader x1={435} y1={121} a={0.48} b={0.25} />
@@ -261,82 +441,123 @@ export default function RoofAnatomy() {
 
           {/* 04 shingles: finished field + ridge cap */}
           <g data-layer="4">
-            <polygon points={quad(0.58, 0, 1, 1)} fill="#2E3640" />
-            <g stroke="#454F5C" strokeWidth="1.5" fill="none">
-              <path d={ridgeLine(0.18, 0.58, 1)} />
-              <path d={ridgeLine(0.36, 0.58, 1)} />
-              <path d={ridgeLine(0.54, 0.58, 1)} />
-              <path d={ridgeLine(0.72, 0.58, 1)} />
-              <path d={ridgeLine(0.9, 0.58, 1)} />
-            </g>
-            <g stroke="#3A4450" strokeWidth="1" fill="none">
-              <path d={slopeLine(0.68, 0, 1)} />
-              <path d={slopeLine(0.78, 0, 1)} />
-              <path d={slopeLine(0.88, 0, 1)} />
-            </g>
+            <polygon points={quad(0.58, 0, 1, 1)} fill="url(#rfShingles)" />
+            {/* peeled edge */}
             <path
               d={slopeLine(0.58, 0, 1)}
-              stroke="#76808E"
+              stroke="#E8E2D4"
               strokeWidth="2.5"
               fill="none"
             />
             {/* ridge cap over the finished section */}
             <polygon
-              points={quad(0.55, 0, 1, 0.065)}
-              fill="#444F5C"
-              stroke="#5E6878"
-              strokeWidth="1.5"
+              points={quad(0.55, 0, 1, 0.075)}
+              fill="#333A44"
+              stroke="#20252C"
+              strokeWidth="1"
             />
-            <g stroke="#2E3640" strokeWidth="1.5" fill="none">
-              <path d={slopeLine(0.64, 0, 0.065)} />
-              <path d={slopeLine(0.73, 0, 0.065)} />
-              <path d={slopeLine(0.82, 0, 0.065)} />
-              <path d={slopeLine(0.91, 0, 0.065)} />
+            <g stroke="#20252C" strokeWidth="1.5" fill="none">
+              <path d={slopeLine(0.62, 0, 0.075)} />
+              <path d={slopeLine(0.69, 0, 0.075)} />
+              <path d={slopeLine(0.76, 0, 0.075)} />
+              <path d={slopeLine(0.83, 0, 0.075)} />
+              <path d={slopeLine(0.9, 0, 0.075)} />
+              <path d={slopeLine(0.97, 0, 0.075)} />
             </g>
+            <path
+              d={ridgeLine(0, 0.55, 1)}
+              stroke="#5A636F"
+              strokeWidth="2"
+              fill="none"
+            />
             <Leader x1={712} y1={332} a={0.97} b={0.6} />
             <Marker x={725} y={330} num="04" />
             <SideLabel x={725} y={302} text="Shingles" anchor="end" />
           </g>
 
-          {/* roof plane outline + drip edge at the eave */}
+          {/* sunlight wash across the whole roof plane */}
+          <polygon
+            points={quad(0, 0, 1, 1)}
+            fill="url(#rfRoofShade)"
+            pointerEvents="none"
+          />
+
+          {/* roof outline + metal drip edge at the eave */}
           <polygon
             points={quad(0, 0, 1, 1)}
             fill="none"
-            stroke="#5E6878"
-            strokeWidth="1.5"
+            stroke="#1F252D"
+            strokeWidth="1.2"
           />
           <path
             d={ridgeLine(1, 0, 1)}
-            stroke="#5E6878"
-            strokeWidth="3.5"
+            stroke="url(#rfMetal)"
+            strokeWidth="4"
             fill="none"
           />
 
-          {/* 05 chimney with step flashing */}
+          {/* 05 brick chimney with flashing */}
           <g data-layer="5">
+            {/* soft shadow downslope of the chimney */}
+            <polygon
+              points={poly([
+                chD,
+                chC,
+                { x: chC.x + S.x * 0.13, y: chC.y + S.y * 0.13 },
+                { x: chD.x + S.x * 0.13, y: chD.y + S.y * 0.13 },
+              ])}
+              fill="#000000"
+              opacity="0.3"
+              filter="url(#rfBlur)"
+            />
             <polygon
               points={poly([chA, chD, chD2, chA2])}
-              fill="#1A2028"
-              stroke="#5E6878"
-              strokeWidth="1.5"
+              fill="url(#rfBrickSide)"
+              stroke="#2E1A10"
+              strokeWidth="1"
             />
             <polygon
               points={poly([chD, chC, chC2, chD2])}
-              fill="#12161C"
-              stroke="#5E6878"
-              strokeWidth="1.5"
+              fill="url(#rfBrickFront)"
+              stroke="#2E1A10"
+              strokeWidth="1"
+            />
+            {/* concrete cap */}
+            <polygon
+              points={poly([
+                up({ x: chA2.x - 4, y: chA2.y }, 1),
+                up({ x: chB2.x + 4, y: chB2.y }, 1),
+                up({ x: chC2.x + 4, y: chC2.y }, 1),
+                up({ x: chD2.x - 4, y: chD2.y }, 1),
+              ])}
+              fill="#CFC9BD"
+              stroke="#8E887D"
+              strokeWidth="1"
             />
             <polygon
-              points={poly([chA2, chB2, chC2, chD2])}
-              fill="#222932"
-              stroke="#5E6878"
-              strokeWidth="1.5"
+              points={poly([
+                up({ x: chD2.x - 4, y: chD2.y }, 1),
+                up({ x: chC2.x + 4, y: chC2.y }, 1),
+                { x: chC2.x + 4, y: chC2.y + 6 },
+                { x: chD2.x - 4, y: chD2.y + 6 },
+              ])}
+              fill="#A8A296"
+              stroke="#8E887D"
+              strokeWidth="0.8"
             />
-            {/* flashing seam where the chimney meets the roof */}
+            {/* metal step flashing along the upslope base */}
+            <polyline
+              points={poly([chA, chD, chC])}
+              stroke="url(#rfMetal)"
+              strokeWidth="5"
+              fill="none"
+              strokeLinejoin="round"
+              strokeLinecap="round"
+            />
             <polyline
               points={poly([chA, chD, chC])}
               stroke="#FF6B2B"
-              strokeWidth="3.5"
+              strokeWidth="1.8"
               fill="none"
               strokeLinejoin="round"
               strokeLinecap="round"
@@ -348,7 +569,6 @@ export default function RoofAnatomy() {
 
           {/* 06 ventilation: soffit intake, ridge exhaust */}
           <g data-layer="6">
-            {/* intake rising into the soffit under the eave */}
             <path
               d="M382 480 Q368 420 363 345"
               stroke="#FF6B2B"
@@ -358,7 +578,6 @@ export default function RoofAnatomy() {
             <polygon points="361,334 354,350 372,347" fill="#FF6B2B" />
             <Marker x={352} y={500} num="06" />
             <SideLabel x={374} y={504} text="Air in" />
-            {/* exhaust leaving the ridge cap */}
             <path
               d="M542 238 Q560 218 572 198"
               stroke="#FF6B2B"
