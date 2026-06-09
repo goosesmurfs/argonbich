@@ -5,16 +5,17 @@ import CtaBand from "@/components/CtaBand";
 import JsonLd from "@/components/JsonLd";
 import { generalFaqs } from "@/lib/faqs";
 import { faqSchema } from "@/lib/schema";
+import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Frequently Asked Questions",
   description:
-    "Answers to common questions about attic insulation, R-values, thermal imaging, fixed-price quotes, and how Hearth Insulation works in the Indianapolis metro.",
+    "Answers to common questions about roof replacement, drone inspections, fixed-price quotes, storm damage, and how Ridgeline Roofing works in the Indianapolis metro.",
   alternates: { canonical: "/faq/" },
   openGraph: {
-    title: "Insulation FAQs | Hearth Insulation",
+    title: "Roofing FAQs | Ridgeline Roofing Co.",
     description:
-      "R-values, thermal imaging, fixed-price quotes, and how we work.",
+      "Drone inspections, fixed-price quotes, storm damage, and how we work.",
     url: "/faq/",
   },
 };
@@ -26,13 +27,13 @@ export default function FaqPage() {
 
       <div className="page-hero">
         <Breadcrumbs items={[{ name: "FAQ", path: "/faq/" }]} />
-        <div className="container" style={{ paddingTop: "1.6rem" }}>
+        <div className="container" style={{ paddingTop: "2rem" }}>
           <span className="eyebrow">Straight Answers</span>
           <h1>Frequently Asked Questions</h1>
           <p className="lede">
             Everything homeowners ask us most, answered the same way we would
-            answer in your kitchen. Do not see your question? Call{" "}
-            <a href="tel:+13175550100">(317) 555-0100</a> and ask.
+            answer in your driveway. Do not see your question? Call{" "}
+            <a href={site.phoneHref}>{site.phone}</a> and ask.
           </p>
         </div>
       </div>

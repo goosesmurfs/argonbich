@@ -6,6 +6,7 @@ import LeadForm from "@/components/LeadForm";
 import CtaBand from "@/components/CtaBand";
 import { cities, getCity } from "@/lib/cities";
 import { services } from "@/lib/services";
+import { site } from "@/lib/site";
 import { CheckIcon } from "@/components/Icons";
 
 type Params = { slug: string };
@@ -23,11 +24,11 @@ export async function generateMetadata({
   const city = getCity(slug);
   if (!city) return {};
   return {
-    title: `Insulation Contractor in ${city.name}, IN`,
-    description: `Blown-in attic insulation, batt replacement, and insulation removal in ${city.name}, Indiana. Free thermal imaging evaluations and fixed-price quotes from an owner-operated contractor.`,
+    title: `Roofing Contractor in ${city.name}, IN`,
+    description: `Roof replacement, roof repair, and storm damage restoration in ${city.name}, Indiana. Free drone inspections and fixed-price quotes from an owner-operated contractor.`,
     alternates: { canonical: `/areas/${city.slug}/` },
     openGraph: {
-      title: `Insulation in ${city.name}, IN | Hearth Insulation`,
+      title: `Roofing in ${city.name}, IN | Ridgeline Roofing Co.`,
       description: city.blurb,
       url: `/areas/${city.slug}/`,
     },
@@ -54,15 +55,15 @@ export default async function CityPage({
             { name: `${city.name}, IN`, path: `/areas/${city.slug}/` },
           ]}
         />
-        <div className="container" style={{ paddingTop: "1.6rem" }}>
+        <div className="container" style={{ paddingTop: "2rem" }}>
           <span className="eyebrow">{city.county}</span>
-          <h1>Insulation Contractor in {city.name}, IN</h1>
+          <h1>Roofing Contractor in {city.name}, IN</h1>
           <p className="lede">{city.blurb}</p>
-          <div className="btn-row" style={{ marginTop: "1.4rem" }}>
+          <div className="btn-row" style={{ marginTop: "1.6rem" }}>
             <Link href="/contact/" className="btn btn-solid">
               Get a Free Estimate
             </Link>
-            <a href="tel:+13175550100" className="btn btn-ghost">
+            <a href={site.phoneHref} className="btn btn-ghost">
               Call Now
             </a>
           </div>
@@ -73,16 +74,14 @@ export default async function CityPage({
         <div className="container two-col">
           <div>
             <span className="eyebrow">Local Knowledge</span>
-            <h2>What We See in {city.name} Homes</h2>
+            <h2>What We See on {city.name} Roofs</h2>
             <p className="lede">{city.housingNote}</p>
             <p>
-              Like the rest of central Indiana, {city.name} sits in IECC
-              Climate Zone 5, where the Department of Energy recommends attic
-              insulation of R-49 to R-60. Most homes we evaluate here measure
-              R-19 or less. Our free evaluation includes a thermal imaging
-              scan, attic depth measurements, and a written fixed-price quote,
-              so you know exactly where your home stands before spending
-              anything.
+              Like the rest of central Indiana, {city.name} roofs live through
+              freeze-thaw winters, spring hail, and straight-line winds. Our
+              free inspection includes a drone documentation pass, a photo
+              report you keep, and a written fixed-price quote, so you know
+              exactly where your roof stands before spending anything.
             </p>
           </div>
           <div>
@@ -99,17 +98,19 @@ export default async function CityPage({
               <li>
                 <CheckIcon />
                 <span>
-                  <Link href="/attic-insulation-process/">
-                    Full 5-step attic restoration
+                  <Link href="/roof-replacement-process/">
+                    Full 5-step replacement process
                   </Link>
                 </span>
               </li>
             </ul>
-            <h3 style={{ marginTop: "1.6rem" }}>Why {city.name} Homeowners Call Us</h3>
+            <h3 style={{ marginTop: "1.6rem" }}>
+              Why {city.name} Homeowners Call Us
+            </h3>
             <ul className="check-list">
               <li>
                 <CheckIcon />
-                <span>Free thermal imaging with every evaluation</span>
+                <span>Free drone inspection with every estimate</span>
               </li>
               <li>
                 <CheckIcon />
@@ -121,7 +122,7 @@ export default async function CityPage({
               </li>
               <li>
                 <CheckIcon />
-                <span>Owner-operated since 2004</span>
+                <span>Owner-operated since 2008</span>
               </li>
             </ul>
           </div>
@@ -132,7 +133,7 @@ export default async function CityPage({
         <div className="container-narrow">
           <div className="section-head center">
             <span className="eyebrow">Get Started in {city.name}</span>
-            <h2>Request Your Free Evaluation</h2>
+            <h2>Request Your Free Inspection</h2>
           </div>
           <LeadForm />
         </div>
@@ -152,8 +153,8 @@ export default async function CityPage({
       </section>
 
       <CtaBand
-        title={`Ready for a Warmer ${city.name} Home?`}
-        body="Schedule your free thermal imaging evaluation. We are in your area every week."
+        title={`Ready for a Stronger ${city.name} Roof?`}
+        body="Schedule your free drone inspection. We are in your area every week."
       />
     </>
   );

@@ -51,15 +51,18 @@ export default function LeadForm({ heading }: { heading?: string }) {
               {s.name}
             </option>
           ))}
+          <option value="Active leak / emergency">
+            Active leak, I need help fast
+          </option>
           <option value="Not sure yet">Not sure yet, please advise</option>
         </select>
       </label>
       <label>
-        Tell us about your home
+        Tell us about your roof
         <textarea
           name="message"
           rows={4}
-          placeholder="Year built, what you are noticing, anything else we should know."
+          placeholder="Roof age if you know it, what you are seeing, recent storms, anything else we should know."
         />
       </label>
       <div className="btn-row">
@@ -71,8 +74,8 @@ export default function LeadForm({ heading }: { heading?: string }) {
         </a>
       </div>
       <p className="form-note">
-        Every estimate includes a thermal imaging scan and a written
-        fixed-price quote. No cost, no obligation, no pressure.
+        Every estimate includes a drone inspection, a photo report you keep,
+        and a written fixed-price quote. No cost, no obligation, no pressure.
       </p>
     </form>
   );

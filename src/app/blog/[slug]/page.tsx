@@ -66,7 +66,7 @@ export default async function PostPage({
               month: "long",
               day: "numeric",
             })}{" "}
-            &middot; {post.readingTime} &middot; By {site.owner}
+            / {post.readingTime} / By {site.owner}
           </span>
           <h1 style={{ marginTop: "0.7rem" }}>{post.title}</h1>
           <p className="lede">{post.description}</p>

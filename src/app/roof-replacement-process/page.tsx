@@ -7,18 +7,19 @@ import CtaBand from "@/components/CtaBand";
 import JsonLd from "@/components/JsonLd";
 import { processSteps, processFaqs } from "@/lib/process";
 import { faqSchema, howToSchema } from "@/lib/schema";
+import { site } from "@/lib/site";
 import { CheckIcon } from "@/components/Icons";
 
 export const metadata: Metadata = {
-  title: "Our 5-Step Attic Insulation Process | Indianapolis, IN",
+  title: "Our 5-Step Roof Replacement Process | Indianapolis, IN",
   description:
-    "How Hearth Insulation restores Indianapolis attics in five steps: removal, decontamination, air sealing, exterior sealing, and blown-in installation to the R-49 to R-60 recommended for IECC Climate Zone 5.",
-  alternates: { canonical: "/attic-insulation-process/" },
+    "How Ridgeline Roofing replaces Indianapolis roofs in five documented steps: inspection, full tear-off, deck repair, water barriers and flashing, and manufacturer-spec installation with balanced ventilation.",
+  alternates: { canonical: "/roof-replacement-process/" },
   openGraph: {
-    title: "Our 5-Step Attic Insulation Process | Hearth Insulation",
+    title: "Our 5-Step Roof Replacement Process | Ridgeline Roofing Co.",
     description:
-      "Removal, decontamination, air sealing, exterior sealing, and blown-in installation. The full attic restoration process, explained step by step.",
-    url: "/attic-insulation-process/",
+      "Inspection, tear-off, deck repair, water barriers, and spec installation. The full roof replacement process, explained step by step.",
+    url: "/roof-replacement-process/",
   },
 };
 
@@ -28,10 +29,10 @@ export default function ProcessPage() {
       <JsonLd
         data={[
           howToSchema({
-            name: "The Hearth Insulation 5-Step Attic Restoration Process",
+            name: "The Ridgeline 5-Step Roof Replacement Process",
             description:
-              "How we take an Indianapolis-area attic from contaminated and under-insulated to clean, sealed, and insulated to R-49 to R-60.",
-            path: "/attic-insulation-process",
+              "How we take an Indianapolis-area roof from aging and undocumented to fully rebuilt, ventilated, and photo-verified.",
+            path: "/roof-replacement-process",
             steps: processSteps.map((s) => ({ name: s.title, text: s.summary })),
           }),
           faqSchema(processFaqs),
@@ -40,23 +41,21 @@ export default function ProcessPage() {
 
       <div className="page-hero">
         <Breadcrumbs
-          items={[
-            { name: "Our Process", path: "/attic-insulation-process/" },
-          ]}
+          items={[{ name: "Our Process", path: "/roof-replacement-process/" }]}
         />
-        <div className="container" style={{ paddingTop: "1.6rem" }}>
+        <div className="container" style={{ paddingTop: "2rem" }}>
           <span className="eyebrow">The Deep Dive</span>
-          <h1>Our 5-Step Attic Insulation Process</h1>
+          <h1>Our 5-Step Roof Replacement Process</h1>
           <p className="lede">
-            A great attic is built in layers, and the insulation is only the
-            last one. Here is exactly what we do, why each step matters, and
-            how to tell which steps your attic needs.
+            A roof is a system, and systems fail at the step somebody skipped.
+            Here is exactly what we do, why each step matters, and how to tell
+            which steps your roof needs.
           </p>
-          <div className="btn-row" style={{ marginTop: "1.4rem" }}>
+          <div className="btn-row" style={{ marginTop: "1.6rem" }}>
             <Link href="/contact/" className="btn btn-solid">
               Get a Free Estimate
             </Link>
-            <a href="tel:+13175550100" className="btn btn-ghost">
+            <a href={site.phoneHref} className="btn btn-ghost">
               Call Now
             </a>
           </div>
@@ -67,16 +66,15 @@ export default function ProcessPage() {
         <div className="container-narrow">
           <span className="eyebrow">Why This Matters in Indiana</span>
           <h2 style={{ fontSize: "1.5rem" }}>
-            Central Indiana Homes Are Running at a Third of the Recommended
-            R-Value
+            Indiana Weather Finds the Step Somebody Skipped
           </h2>
           <p className="lede">
-            Indianapolis sits in IECC Climate Zone 5, where the Department of
-            Energy recommends attic insulation of R-49 to R-60. Most homes we
-            evaluate across the metro have R-19 or less. That gap is why
-            second floors bake in July, why furnaces run all night in January,
-            and why ice dams form along so many local rooflines. The five
-            steps below close that gap permanently, in the right order.
+            Central Indiana roofs face freeze-thaw cycles that pry open every
+            gap, spring hail that bruises shingle mats, straight-line winds
+            that test every nail, and attic heat that cooks shingles from
+            below. A roof that lasts here is not a product; it is a sequence
+            done in the right order. These are the five steps, and we do not
+            skip any of them.
           </p>
         </div>
       </section>
@@ -88,9 +86,10 @@ export default function ProcessPage() {
               key={step.slug}
               id={`step-${step.number}`}
               className="process-step"
+              data-num={`0${step.number}`}
             >
               <span className="process-step-kicker">
-                Step {step.number} of 5
+                Step 0{step.number} / 05
               </span>
               <h2>{step.title}</h2>
               <p className="lede">{step.summary}</p>
@@ -125,33 +124,41 @@ export default function ProcessPage() {
         <div className="container two-col">
           <div>
             <span className="eyebrow">The Result</span>
-            <h2>What a Finished Hearth Attic Looks Like</h2>
+            <h2>What a Finished Ridgeline Roof Looks Like</h2>
             <p className="lede">
-              Clean decking, sealed penetrations, protected ventilation, and a
-              deep, even blanket of insulation at a photographed, verifiable
-              depth.
+              Inspected decking, layered water barriers, rebuilt flashing,
+              balanced ventilation, and shingles installed to the spec their
+              warranty depends on. All of it photographed.
             </p>
           </div>
           <ul className="check-list">
             <li>
               <CheckIcon />
-              <span>Insulated to R-49 to R-60, the DOE recommendation for Climate Zone 5</span>
+              <span>Full tear-off with every layer and nail removed</span>
             </li>
             <li>
               <CheckIcon />
-              <span>Every ceiling penetration air sealed with fire-rated materials</span>
+              <span>
+                Deck repaired at a per-sheet price agreed before tear-off
+              </span>
             </li>
             <li>
               <CheckIcon />
-              <span>Soffit ventilation protected with baffles at every eave</span>
+              <span>
+                Ice and water shield at eaves, valleys, and penetrations
+              </span>
             </li>
             <li>
               <CheckIcon />
-              <span>Exterior entry points sealed so pests stay out for good</span>
+              <span>All flashing replaced, never reused</span>
             </li>
             <li>
               <CheckIcon />
-              <span>Photo documentation of depth markers and finished work</span>
+              <span>Balanced intake and ridge ventilation</span>
+            </li>
+            <li>
+              <CheckIcon />
+              <span>Photo report, warranty registration, magnetic sweep</span>
             </li>
           </ul>
         </div>
@@ -170,10 +177,10 @@ export default function ProcessPage() {
       <section className="section">
         <div className="container-narrow">
           <div className="section-head center">
-            <span className="eyebrow">Find Out What Your Attic Needs</span>
-            <h2>Start With the Free Thermal Evaluation</h2>
+            <span className="eyebrow">Find Out What Your Roof Needs</span>
+            <h2>Start With the Free Drone Inspection</h2>
             <p className="lede" style={{ textAlign: "center" }}>
-              The camera tells us which of the five steps your attic actually
+              The photos tell us which of the five steps your roof actually
               needs. The fixed-price quote lists them, and the price does not
               move.
             </p>
@@ -183,8 +190,8 @@ export default function ProcessPage() {
       </section>
 
       <CtaBand
-        title="One Attic. One Quote. One Day, Usually."
-        body="Tell us about your home and we will schedule your free thermal imaging evaluation this week."
+        title="One Roof. One Quote. One Crew."
+        body="Tell us about your home and we will schedule your free drone inspection this week."
       />
     </>
   );

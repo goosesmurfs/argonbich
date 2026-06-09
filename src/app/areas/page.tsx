@@ -3,17 +3,18 @@ import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CtaBand from "@/components/CtaBand";
 import { cities } from "@/lib/cities";
+import { site } from "@/lib/site";
 import { MapPinIcon } from "@/components/Icons";
 
 export const metadata: Metadata = {
-  title: "Service Areas | Insulation Contractor for the Indianapolis Metro",
+  title: "Service Areas | Roofing Contractor for the Indianapolis Metro",
   description:
-    "Hearth Insulation serves Indianapolis, Carmel, Fishers, Noblesville, Westfield, Zionsville, Greenwood, Avon, Brownsburg, Lawrence, Beech Grove, and Geist with free thermal imaging evaluations.",
+    "Ridgeline Roofing serves Indianapolis, Carmel, Fishers, Noblesville, Westfield, Zionsville, Greenwood, Avon, Brownsburg, Lawrence, Beech Grove, and Geist with free drone roof inspections.",
   alternates: { canonical: "/areas/" },
   openGraph: {
-    title: "Service Areas | Hearth Insulation",
+    title: "Service Areas | Ridgeline Roofing Co.",
     description:
-      "Insulation services across Indianapolis and the surrounding metro.",
+      "Roofing services across Indianapolis and the surrounding metro.",
     url: "/areas/",
   },
 };
@@ -23,14 +24,14 @@ export default function AreasPage() {
     <>
       <div className="page-hero">
         <Breadcrumbs items={[{ name: "Service Areas", path: "/areas/" }]} />
-        <div className="container" style={{ paddingTop: "1.6rem" }}>
+        <div className="container" style={{ paddingTop: "2rem" }}>
           <span className="eyebrow">Where We Work</span>
-          <h1>Serving the Indianapolis Metro Since 2004</h1>
+          <h1>Serving the Indianapolis Metro Since 2008</h1>
           <p className="lede">
             We are based in Indianapolis and run our in-house crews across the
             metro every week. If you are in one of the communities below, the
-            thermal imaging evaluation is free and scheduling is usually within
-            the week.
+            drone inspection is free and scheduling is usually within the
+            week.
           </p>
         </div>
       </div>
@@ -42,12 +43,10 @@ export default function AreasPage() {
               <span className="card-icon">
                 <MapPinIcon size={24} />
               </span>
-              <h3>
-                {c.name}, IN
-              </h3>
+              <h3>{c.name}, IN</h3>
               <p>{c.blurb}</p>
               <Link href={`/areas/${c.slug}/`} className="card-link">
-                Insulation in {c.name} &rarr;
+                Roofing in {c.name} &rarr;
               </Link>
             </article>
           ))}
@@ -59,8 +58,8 @@ export default function AreasPage() {
           <h2 style={{ fontSize: "1.5rem" }}>Just Outside These Areas?</h2>
           <p className="lede">
             We regularly take jobs a little beyond this list when the schedule
-            allows. Call <a href="tel:+13175550100">(317) 555-0100</a> and ask.
-            The worst we can say is not this week.
+            allows. Call <a href={site.phoneHref}>{site.phone}</a> and ask. The
+            worst we can say is not this week.
           </p>
         </div>
       </section>

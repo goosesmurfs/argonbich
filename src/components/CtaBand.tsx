@@ -2,18 +2,20 @@ import Link from "next/link";
 import { site } from "@/lib/site";
 
 export default function CtaBand({
-  title = "Ready for a More Comfortable Home?",
-  body = "Schedule your free home evaluation. We bring the thermal camera, you get the full picture and a fixed-price quote in writing.",
+  title = "Let's Look at Your Roof.",
+  body = "Schedule your free inspection. The drone flies, you get the full photo report and a fixed-price quote in writing, and the decision stays yours.",
 }: {
   title?: string;
   body?: string;
 }) {
   return (
     <section className="section section-dark cta-band">
-      <div className="container-narrow">
-        <span className="eyebrow">Free Evaluation, Fixed-Price Quote</span>
+      <div className="container">
+        <span className="eyebrow">Free Inspection / Fixed-Price Quote</span>
         <h2>{title}</h2>
-        <p className="lede">{body}</p>
+        <p className="lede" style={{ maxWidth: "620px" }}>
+          {body}
+        </p>
         <p>
           <a href={site.phoneHref} className="cta-phone">
             {site.phone}

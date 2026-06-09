@@ -133,3 +133,43 @@ export function StarIcon({ size = 18 }: IconProps) {
     </svg>
   );
 }
+
+export function RoofIcon({ size = 26 }: IconProps) {
+  return (
+    <svg {...base(size)}>
+      <path d="m2 13 10-9 10 9" />
+      <path d="M6 9.4V13l6 5.4L18 13V9.4" />
+      <path d="M12 18.4V22" />
+    </svg>
+  );
+}
+
+export function HammerIcon({ size = 26 }: IconProps) {
+  return (
+    <svg {...base(size)}>
+      <path d="m15 12-8.373 8.373a1 1 0 1 1-3-3L12 9" />
+      <path d="m18 15 4-4" />
+      <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172V7l-2.26-2.26a6 6 0 0 0-4.202-1.756L9 2.96l.92.82A6.18 6.18 0 0 1 12 8.4V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />
+    </svg>
+  );
+}
+
+export function StormIcon({ size = 26 }: IconProps) {
+  return (
+    <svg {...base(size)}>
+      <path d="M6 16.326A7 7 0 1 1 16 9h1.5a4.5 4.5 0 0 1 .5 8.973" />
+      <path d="m13 12-3 5h4l-3 5" />
+    </svg>
+  );
+}
+
+export function DroneIcon({ size = 26 }: IconProps) {
+  return (
+    <svg {...base(size)}>
+      <circle cx="12" cy="13" r="3" />
+      <path d="M4 6h4M16 6h4M6 6v3.5M18 6v3.5" />
+      <path d="M9.5 11 6 9.5M14.5 11 18 9.5" />
+      <path d="M12 16v3" />
+    </svg>
+  );
+}

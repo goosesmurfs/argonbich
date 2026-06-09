@@ -1,35 +1,37 @@
-# Hearth Insulation
+# Ridgeline Roofing Co.
 
-> Owner-operated insulation contractor serving Indianapolis, IN and the
-> surrounding metro since 2004. Blown-in attic insulation, batt insulation
-> replacement, and insulation removal. Every free home evaluation includes a
-> thermal imaging scan and a written fixed-price quote. All work is performed
-> by in-house crews; no subcontractors. Tagline: "Comfort starts here."
+> Owner-operated roofing contractor serving Indianapolis, IN and the
+> surrounding metro since 2008. Roof replacement, roof repair, and storm
+> damage restoration. Every free estimate includes a drone inspection and a
+> photo report the homeowner keeps, plus a written fixed-price quote. All
+> work is performed by in-house crews; no subcontractors.
+> Tagline: "Over your head. Under control."
 
-Phone: (317) 555-0100
-Email: hello@hearthinsulation.com
-Owner: Paul Bryant (20+ years of building science experience)
+Phone: (317) 555-0148
+Email: hello@ridgelineroofing.com
+Owner: Dan Whitaker
 Service area: Indianapolis, Carmel, Fishers, Noblesville, Westfield,
 Zionsville, Greenwood, Avon, Brownsburg, Lawrence, Beech Grove, and Geist.
 
-Key facts: Indianapolis is in IECC Climate Zone 5. The U.S. Department of
-Energy recommends attic insulation of R-49 to R-60 in this zone. Most local
-homes Hearth evaluates have R-19 or less.
+Key facts: Typical asphalt roof life in central Indiana is 18 to 25 years.
+Ridgeline performs full tear-offs only, never overlays. Deck repair is
+priced per sheet before tear-off, so the fixed-price quote does not change
+mid-job. Most replacements finish in one to two days.
 
 ## Services
 
-- [Blown-In Attic Insulation](https://www.hearthinsulation.com/services/blown-in-attic-insulation/): Loose-fill insulation blown to a verified depth, with air sealing first.
-- [Batt Insulation Replacement](https://www.hearthinsulation.com/services/batt-insulation-replacement/): Failed, sagging, or contaminated batts replaced and installed to spec.
-- [Insulation Removal](https://www.hearthinsulation.com/services/insulation-removal/): Contained vacuum removal of contaminated or wet insulation.
-- [5-Step Attic Restoration Process](https://www.hearthinsulation.com/attic-insulation-process/): Removal, decontamination, air sealing, exterior sealing, blown-in install.
+- [Roof Replacement](https://www.ridgelineroofing.com/services/roof-replacement/): Full tear-off and system rebuild with documented deck repair and balanced ventilation.
+- [Roof Repair](https://www.ridgelineroofing.com/services/roof-repair/): Leak tracing and permanent detail rebuilds: flashing, valleys, pipe boots, wind damage.
+- [Storm Damage Restoration](https://www.ridgelineroofing.com/services/storm-damage-restoration/): Emergency tarping, timestamped damage documentation, and full restoration.
+- [5-Step Replacement Process](https://www.ridgelineroofing.com/roof-replacement-process/): Inspection, tear-off, deck repair, water barriers, spec installation.
 
 ## Pages
 
-- [Home](https://www.hearthinsulation.com/)
-- [Services](https://www.hearthinsulation.com/services/)
-- [Service Areas](https://www.hearthinsulation.com/areas/)
-- [About Paul Bryant](https://www.hearthinsulation.com/about/)
-- [FAQ](https://www.hearthinsulation.com/faq/)
-- [Resources](https://www.hearthinsulation.com/resources/)
-- [Blog](https://www.hearthinsulation.com/blog/)
-- [Contact](https://www.hearthinsulation.com/contact/)
+- [Home](https://www.ridgelineroofing.com/)
+- [Services](https://www.ridgelineroofing.com/services/)
+- [Service Areas](https://www.ridgelineroofing.com/areas/)
+- [About Dan Whitaker](https://www.ridgelineroofing.com/about/)
+- [FAQ](https://www.ridgelineroofing.com/faq/)
+- [Resources](https://www.ridgelineroofing.com/resources/)
+- [Blog](https://www.ridgelineroofing.com/blog/)
+- [Contact](https://www.ridgelineroofing.com/contact/)

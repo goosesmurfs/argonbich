@@ -4,7 +4,7 @@ import { site } from "@/lib/site";
 
 const navLinks = [
   { href: "/services/", label: "Services" },
-  { href: "/attic-insulation-process/", label: "Our Process" },
+  { href: "/roof-replacement-process/", label: "Our Process" },
   { href: "/areas/", label: "Service Areas" },
   { href: "/about/", label: "About" },
   { href: "/blog/", label: "Blog" },
@@ -18,8 +18,8 @@ export default function Header() {
         <Link href="/" className="brand" aria-label={`${site.name} home`}>
           <Logo />
           <span>
-            <span className="brand-name">Hearth Insulation</span>
-            <span className="brand-tag">Comfort starts here</span>
+            <span className="brand-name">Ridgeline Roofing</span>
+            <span className="brand-tag">Indianapolis, IN</span>
           </span>
         </Link>
 

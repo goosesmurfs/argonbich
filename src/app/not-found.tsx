@@ -4,11 +4,13 @@ export default function NotFound() {
   return (
     <section className="section" style={{ textAlign: "center" }}>
       <div className="container-narrow">
-        <span className="eyebrow">404</span>
-        <h1>This Page Has No Insulation</h1>
+        <span className="eyebrow" style={{ justifyContent: "center" }}>
+          404
+        </span>
+        <h1>This Page Sprung a Leak</h1>
         <p className="lede">
           The page you are looking for does not exist or has moved. Let's get
-          you somewhere warmer.
+          you back under cover.
         </p>
         <div className="btn-row" style={{ justifyContent: "center" }}>
           <Link href="/" className="btn btn-solid">

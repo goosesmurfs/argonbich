@@ -5,14 +5,13 @@ import CtaBand from "@/components/CtaBand";
 import { posts } from "@/lib/posts";
 
 export const metadata: Metadata = {
-  title: "Blog | Insulation Advice for Central Indiana Homeowners",
+  title: "Blog | Roofing Advice for Central Indiana Homeowners",
   description:
-    "Practical articles on attic insulation, R-values, ice dams, and home comfort, written for Indianapolis-area homeowners by Hearth Insulation.",
+    "Practical articles on roof lifespan, hail damage, repair-or-replace decisions, and home protection, written for Indianapolis-area homeowners by Ridgeline Roofing.",
   alternates: { canonical: "/blog/" },
   openGraph: {
-    title: "The Hearth Insulation Blog",
-    description:
-      "Practical insulation advice for central Indiana homeowners.",
+    title: "The Ridgeline Roofing Blog",
+    description: "Practical roofing advice for central Indiana homeowners.",
     url: "/blog/",
   },
 };
@@ -22,13 +21,13 @@ export default function BlogPage() {
     <>
       <div className="page-hero">
         <Breadcrumbs items={[{ name: "Blog", path: "/blog/" }]} />
-        <div className="container" style={{ paddingTop: "1.6rem" }}>
-          <span className="eyebrow">From the Attic</span>
-          <h1>Insulation Advice for Indiana Homes</h1>
+        <div className="container" style={{ paddingTop: "2rem" }}>
+          <span className="eyebrow">From the Ridge</span>
+          <h1>Roofing Advice for Indiana Homes</h1>
           <p className="lede">
-            Plain-language articles on the things we explain in kitchens and
-            attics every week: R-values, ice dams, air sealing, and how to
-            know what your home actually needs.
+            Plain-language articles on the things we explain in driveways
+            every week: roof lifespan, hail damage, repair-or-replace calls,
+            and how to know what your roof actually needs.
           </p>
         </div>
       </div>
@@ -43,7 +42,7 @@ export default function BlogPage() {
                   month: "long",
                   day: "numeric",
                 })}{" "}
-                &middot; {p.readingTime}
+                / {p.readingTime}
               </span>
               <h3 style={{ marginTop: "0.6rem" }}>
                 <Link

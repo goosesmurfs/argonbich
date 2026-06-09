@@ -2,43 +2,43 @@ export type Faq = { q: string; a: string };
 
 export const generalFaqs: Faq[] = [
   {
-    q: "Is the home evaluation really free?",
-    a: "Yes. Every evaluation includes a thermal imaging scan, an attic inspection with depth measurements, and a written fixed-price quote, all at no cost and with no obligation.",
+    q: "Is the roof inspection really free?",
+    a: "Yes. Every estimate includes a drone inspection, a ladder-and-attic check where access allows, a full photo report you keep, and a written fixed-price quote. No cost, no obligation.",
   },
   {
-    q: "What does thermal imaging show?",
-    a: "A thermal camera makes heat loss visible. Cold spots on a winter ceiling or hot spots in summer show exactly where insulation is thin, missing, or bypassed by air leaks, so you can see the problem before you spend a dollar fixing it.",
-  },
-  {
-    q: "How much insulation should an Indianapolis attic have?",
-    a: "Central Indiana is in IECC Climate Zone 5. The Department of Energy recommends attic insulation of R-49 to R-60 here. Most homes we evaluate in the metro have R-19 or less.",
+    q: "Why do you use a drone?",
+    a: "Because it sees everything and risks nothing. The drone documents every slope, valley, and flashing detail in high resolution, including areas unsafe to walk, and the photos become your report. You see exactly what we see before any price is discussed.",
   },
   {
     q: "What is a fixed-price quote?",
-    a: "The number on your quote is the number on your invoice. We measure carefully up front, put the full scope in writing, and absorb any surprises ourselves. No hourly creep, no change-order games.",
+    a: "The number on your quote is the number on your invoice. Deck repair is covered by a pre-agreed per-sheet allowance printed on the quote, so even hidden damage has a known price before tear-off starts.",
   },
   {
     q: "Do you use subcontractors?",
-    a: "No. Every job is performed by our own in-house crews, trained on our process and accountable to Paul directly.",
+    a: "No. Every Ridgeline roof is installed by our own in-house crews, trained on our process and accountable to Dan directly.",
   },
   {
-    q: "How long does a typical job take?",
-    a: "Most attic insulation projects are completed in a single day. Removal plus full restoration can take two days depending on attic size and condition.",
+    q: "How long does a roof replacement take?",
+    a: "Most homes in the metro are torn off, repaired, dried in, and shingled in one to two days. You get the expected schedule in writing with your quote.",
   },
   {
-    q: "Do you insulate new construction?",
-    a: "Our focus is existing homes: upgrades, replacements, and removals. That focus is why we are good at the messy, real-world problems new-construction crews never see.",
+    q: "How do I know if I need repair or replacement?",
+    a: "Age and failure pattern. Isolated damage on a roof with life left is a repair. Widespread granule loss, brittle shingles, or chronic leaks at multiple details mean repairs are just rent. We show you the evidence on camera and give you the honest call either way.",
+  },
+  {
+    q: "Do you help with insurance claims after storms?",
+    a: "We provide the documentation a claim needs: timestamped drone photos of every slope, soft metal damage, and a clear written scope. We will walk your adjuster across the roof. Coverage decisions stay between you and your insurer, where they belong.",
   },
   {
     q: "What areas do you serve?",
     a: "Indianapolis and the surrounding metro, including Carmel, Fishers, Noblesville, Westfield, Zionsville, Greenwood, Avon, Brownsburg, Lawrence, Beech Grove, and Geist.",
   },
   {
-    q: "Should I air seal before insulating?",
-    a: "Yes, and we build it into every attic job. Insulation slows heat transfer but does not stop airflow. Sealing the gaps around fixtures, pipes, and top plates first is what makes the new insulation perform.",
+    q: "What happens to the old roof and all the nails?",
+    a: "Tear-off debris goes straight into a contained trailer or dumpster with catch protection for your landscaping. We run magnetic nail sweeps across the yard and driveway every evening and again at final cleanup.",
   },
   {
-    q: "Will new insulation help in summer too?",
-    a: "Absolutely. In an Indiana July, an under-insulated attic can exceed 130 degrees and radiates that heat into your bedrooms all evening. Proper insulation cuts that load dramatically and shortens air conditioner run times.",
+    q: "Will my new roof be ventilated properly?",
+    a: "Yes, and it matters more than people think. Trapped attic heat cooks shingles from below and can void manufacturer coverage. Balanced intake and exhaust ventilation is part of every Ridgeline replacement, not an upsell.",
   },
 ];

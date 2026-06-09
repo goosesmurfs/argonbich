@@ -10,7 +10,7 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} | Attic Insulation Contractor in Indianapolis, IN`,
+    default: `${site.name} | Roofing Contractor in Indianapolis, IN`,
     template: `%s | ${site.name}`,
   },
   description: site.description,
@@ -35,7 +35,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow:wght@400;500;600&family=Barlow+Semi+Condensed:wght@500;600&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap"
           rel="stylesheet"
         />
       </head>

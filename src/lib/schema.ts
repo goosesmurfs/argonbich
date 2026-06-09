@@ -5,7 +5,7 @@ import type { Faq } from "./faqs";
 export function localBusinessSchema() {
   return {
     "@context": "https://schema.org",
-    "@type": "HomeAndConstructionBusiness",
+    "@type": "RoofingContractor",
     "@id": `${site.url}/#business`,
     name: site.name,
     slogan: site.tagline,
@@ -29,15 +29,15 @@ export function localBusinessSchema() {
     openingHoursSpecification: {
       "@type": "OpeningHoursSpecification",
       dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      opens: "07:30",
-      closes: "17:30",
+      opens: "07:00",
+      closes: "18:00",
     },
     knowsAbout: [
-      "Blown-in attic insulation",
-      "Batt insulation replacement",
-      "Insulation removal",
-      "Air sealing",
-      "Thermal imaging",
+      "Roof replacement",
+      "Roof repair",
+      "Storm damage restoration",
+      "Hail damage inspection",
+      "Drone roof inspection",
     ],
   };
 }

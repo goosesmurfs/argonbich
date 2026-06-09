@@ -5,14 +5,14 @@ import { site } from "@/lib/site";
 import { PhoneIcon, MailIcon, ClockIcon, MapPinIcon } from "@/components/Icons";
 
 export const metadata: Metadata = {
-  title: "Contact Us | Free Insulation Estimate in Indianapolis",
+  title: "Contact Us | Free Roof Inspection in Indianapolis",
   description:
-    "Request a free home insulation evaluation with thermal imaging. Call (317) 555-0100 or send the form and we will get back to you within one business day.",
+    "Request a free roof inspection with drone documentation. Call (317) 555-0148 or send the form and we will get back to you within one business day.",
   alternates: { canonical: "/contact/" },
   openGraph: {
-    title: "Contact Hearth Insulation",
+    title: "Contact Ridgeline Roofing Co.",
     description:
-      "Free thermal imaging evaluations and fixed-price quotes for the Indianapolis metro.",
+      "Free drone inspections and fixed-price quotes for the Indianapolis metro.",
     url: "/contact/",
   },
 };
@@ -22,12 +22,13 @@ export default function ContactPage() {
     <>
       <div className="page-hero">
         <Breadcrumbs items={[{ name: "Contact", path: "/contact/" }]} />
-        <div className="container" style={{ paddingTop: "1.6rem" }}>
+        <div className="container" style={{ paddingTop: "2rem" }}>
           <span className="eyebrow">Get In Touch</span>
-          <h1>Let's Take a Look at Your Attic</h1>
+          <h1>Let's Put a Drone Over Your Roof</h1>
           <p className="lede">
-            Call, email, or send the form. We respond within one business day
-            and most evaluations are scheduled within the week.
+            Call, email, or send the form. We respond within one business day,
+            most inspections are scheduled within the week, and active leaks
+            jump the line.
           </p>
         </div>
       </div>
@@ -36,7 +37,7 @@ export default function ContactPage() {
         <div className="container two-col">
           <div>
             <span className="eyebrow">Request an Estimate</span>
-            <h2>Free Evaluation, Fixed-Price Quote</h2>
+            <h2>Free Inspection, Fixed-Price Quote</h2>
             <LeadForm />
           </div>
           <div>
@@ -67,7 +68,7 @@ export default function ContactPage() {
             </ul>
             <iframe
               className="map-frame"
-              title="Map of Hearth Insulation's Indianapolis service area"
+              title="Map of Ridgeline Roofing's Indianapolis service area"
               src="https://www.google.com/maps?q=Indianapolis,+IN&output=embed"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"

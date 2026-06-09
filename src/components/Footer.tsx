@@ -13,18 +13,16 @@ export default function Footer() {
             <Logo />
             <span>
               <span className="brand-name" style={{ color: "#fff" }}>
-                Hearth Insulation
+                Ridgeline Roofing
               </span>
-              <span className="brand-tag" style={{ color: "var(--honey-bright)" }}>
-                Comfort starts here
-              </span>
+              <span className="brand-tag">{site.tagline}</span>
             </span>
           </div>
           <p>
-            Owner-operated insulation contractor serving Indianapolis and the
-            surrounding metro since {site.founded}. Thermal imaging on every
-            free evaluation, fixed-price quotes, and in-house crews on every
-            job.
+            Owner-operated roofing contractor serving Indianapolis and the
+            surrounding metro since {site.founded}. Drone inspection and photo
+            report with every free estimate, fixed-price quotes, and in-house
+            crews on every roof.
           </p>
           <p>
             <a href={site.phoneHref}>{site.phone}</a>
@@ -44,8 +42,8 @@ export default function Footer() {
               </li>
             ))}
             <li>
-              <Link href="/attic-insulation-process/">
-                Attic Restoration Process
+              <Link href="/roof-replacement-process/">
+                Roof Replacement Process
               </Link>
             </li>
           </ul>
@@ -69,7 +67,7 @@ export default function Footer() {
           <h4>Company</h4>
           <ul>
             <li>
-              <Link href="/about/">About Paul</Link>
+              <Link href="/about/">About Dan</Link>
             </li>
             <li>
               <Link href="/faq/">FAQ</Link>
@@ -89,11 +87,10 @@ export default function Footer() {
 
       <div className="container footer-bottom">
         <span>
-          Copyright {new Date().getFullYear()} {site.name}. All rights
-          reserved.
+          Copyright {new Date().getFullYear()} {site.name} All rights reserved.
         </span>
         <span>
-          {site.city}, {site.state}. Founded {site.founded}.
+          {site.city}, {site.state} / Founded {site.founded}
         </span>
       </div>
     </footer>
