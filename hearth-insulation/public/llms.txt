@@ -1,0 +1,35 @@
+# Hearth Insulation
+
+> Owner-operated insulation contractor serving Indianapolis, IN and the
+> surrounding metro since 2004. Blown-in attic insulation, batt insulation
+> replacement, and insulation removal. Every free home evaluation includes a
+> thermal imaging scan and a written fixed-price quote. All work is performed
+> by in-house crews; no subcontractors. Tagline: "Comfort starts here."
+
+Phone: (317) 555-0100
+Email: hello@hearthinsulation.com
+Owner: Paul Bryant (20+ years of building science experience)
+Service area: Indianapolis, Carmel, Fishers, Noblesville, Westfield,
+Zionsville, Greenwood, Avon, Brownsburg, Lawrence, Beech Grove, and Geist.
+
+Key facts: Indianapolis is in IECC Climate Zone 5. The U.S. Department of
+Energy recommends attic insulation of R-49 to R-60 in this zone. Most local
+homes Hearth evaluates have R-19 or less.
+
+## Services
+
+- [Blown-In Attic Insulation](https://www.hearthinsulation.com/services/blown-in-attic-insulation/): Loose-fill insulation blown to a verified depth, with air sealing first.
+- [Batt Insulation Replacement](https://www.hearthinsulation.com/services/batt-insulation-replacement/): Failed, sagging, or contaminated batts replaced and installed to spec.
+- [Insulation Removal](https://www.hearthinsulation.com/services/insulation-removal/): Contained vacuum removal of contaminated or wet insulation.
+- [5-Step Attic Restoration Process](https://www.hearthinsulation.com/attic-insulation-process/): Removal, decontamination, air sealing, exterior sealing, blown-in install.
+
+## Pages
+
+- [Home](https://www.hearthinsulation.com/)
+- [Services](https://www.hearthinsulation.com/services/)
+- [Service Areas](https://www.hearthinsulation.com/areas/)
+- [About Paul Bryant](https://www.hearthinsulation.com/about/)
+- [FAQ](https://www.hearthinsulation.com/faq/)
+- [Resources](https://www.hearthinsulation.com/resources/)
+- [Blog](https://www.hearthinsulation.com/blog/)
+- [Contact](https://www.hearthinsulation.com/contact/)

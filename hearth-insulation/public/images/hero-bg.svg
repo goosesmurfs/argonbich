@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3a2a18"/>
+      <stop offset="0.45" stop-color="#7a4f23"/>
+      <stop offset="0.75" stop-color="#c8893a"/>
+      <stop offset="1" stop-color="#e8b15e"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.78" r="0.55">
+      <stop offset="0" stop-color="#ffd98a" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#ffd98a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#sky)"/>
+  <ellipse cx="800" cy="700" rx="700" ry="380" fill="url(#glow)"/>
+  <!-- distant treeline -->
+  <path d="M0 640 Q120 600 240 632 Q360 596 480 628 Q600 592 720 626 Q840 590 960 624 Q1080 588 1200 622 Q1320 590 1440 626 Q1530 600 1600 630 L1600 900 L0 900 Z" fill="#52391c" opacity="0.55"/>
+  <!-- far houses -->
+  <g fill="#3f2d17">
+    <path d="M80 700 L80 600 L190 545 L300 600 L300 700 Z"/>
+    <rect x="120" y="620" width="34" height="38" fill="#f4b75c" opacity="0.9"/>
+    <rect x="226" y="620" width="34" height="38" fill="#f4b75c" opacity="0.75"/>
+    <path d="M1300 700 L1300 590 L1420 535 L1540 590 L1540 700 Z"/>
+    <rect x="1346" y="612" width="36" height="40" fill="#f4b75c" opacity="0.85"/>
+    <rect x="1452" y="612" width="36" height="40" fill="#f4b75c" opacity="0.7"/>
+  </g>
+  <!-- main craftsman house -->
+  <g>
+    <path d="M520 740 L520 560 L800 430 L1080 560 L1080 740 Z" fill="#33240f"/>
+    <path d="M488 572 L800 422 L1112 572 L1096 596 L800 456 L504 596 Z" fill="#241806"/>
+    <rect x="560" y="600" width="70" height="86" rx="6" fill="#ffc966" opacity="0.95"/>
+    <rect x="700" y="600" width="70" height="86" rx="6" fill="#ffc966" opacity="0.85"/>
+    <rect x="840" y="600" width="70" height="86" rx="6" fill="#ffc966" opacity="0.9"/>
+    <rect x="966" y="586" width="84" height="154" rx="8" fill="#1d1406"/>
+    <rect x="980" y="600" width="56" height="80" rx="4" fill="#ffc966" opacity="0.6"/>
+    <rect x="746" y="470" width="108" height="64" rx="6" fill="#ffc966" opacity="0.75"/>
+    <rect x="900" y="430" width="34" height="80" fill="#241806"/>
+  </g>
+  <!-- foreground ground -->
+  <path d="M0 740 Q400 712 800 736 Q1200 760 1600 730 L1600 900 L0 900 Z" fill="#241806"/>
+</svg>
